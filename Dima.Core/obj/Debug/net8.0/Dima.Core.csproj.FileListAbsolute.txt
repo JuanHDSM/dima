@@ -5,7 +5,6 @@ C:\dev\ws-csharp\projects\DimaFinancial\Dima.Core\obj\Debug\net8.0\Dima.Core.Gen
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Core\obj\Debug\net8.0\Dima.Core.AssemblyInfoInputs.cache
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Core\obj\Debug\net8.0\Dima.Core.AssemblyInfo.cs
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Core\obj\Debug\net8.0\Dima.Core.csproj.CoreCompileInputs.cache
-C:\dev\ws-csharp\projects\DimaFinancial\Dima.Core\obj\Debug\net8.0\Dima.Core.sourcelink.json
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Core\obj\Debug\net8.0\Dima.Core.dll
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Core\obj\Debug\net8.0\refint\Dima.Core.dll
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Core\obj\Debug\net8.0\Dima.Core.pdb

@@ -1,5 +1,19 @@
 
+using Dima.Api.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var cnnStr = builder
+    .Configuration
+    .GetConnectionString("DefaultConnection") ?? string.Empty;
+
+builder.Services.AddDbContext<AppDbContext>(
+    options =>
+        {
+            options.UseMySql(cnnStr, new MySqlServerVersion(new Version(8, 0, 2)));
+        }
+);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x => 

@@ -50,28 +50,6 @@ namespace Dima.Api.Handlers
             }
         }
 
-        public Task<Response<List<Category>>> GetAllAsync(GetAllCategoriesRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
-        {
-            try
-            {
-                var category = await context.Categories.AsNoTracking().FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
-                if (category is null)
-                    return new Response<Category?>(null, 404, "Categoria não encontrada");
-
-                return new Response<Category?>(category);
-            }
-            catch (System.Exception)
-            {
-                
-                throw;
-            }
-        }
-
         public async Task<Response<Category?>> UpdateAsync(UpdateCategoryRequest request)
         {
             try
@@ -92,6 +70,50 @@ namespace Dima.Api.Handlers
             {
                 return new Response<Category?>(null, 500, "Não foi possível atualizar a categoria");
 
+            }
+        }
+
+        public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
+        {
+            try
+            {
+                var category = await context.Categories.AsNoTracking().FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+                return category is null
+                    ? new Response<Category?>(null, 404, "Categoria não encontrada")
+                    : new Response<Category?>(category);
+            }
+            catch
+            {
+                return new Response<Category?>(null, 500, "Falha ao obter uma categoria");
+            }
+        }
+
+    public async Task<PagedResponse<List<Category>>> GetAllAsync(GetAllCategoriesRequest request)
+    {
+        try
+        {
+            var query = context
+                .Categories
+                .AsNoTracking()
+                .Where(x => x.UserId == request.UserId)
+                .OrderBy(x => x.Title);
+
+            var categories = await query
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync();
+
+            var count = await query.CountAsync();
+
+            return new PagedResponse<List<Category>>(
+                categories,
+                count,
+                request.PageNumber,
+                request.PageSize);
+            }
+            catch
+            {
+                return new PagedResponse<List<Category>>(null, 500, "Não foi possível consultar as categorias");
             }
         }
     }

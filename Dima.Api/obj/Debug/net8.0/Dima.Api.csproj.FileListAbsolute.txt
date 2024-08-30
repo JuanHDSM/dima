@@ -106,3 +106,4 @@ C:\dev\ws-csharp\projects\DimaFinancial\Dima.Api\obj\Debug\net8.0\refint\Dima.Ap
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Api\obj\Debug\net8.0\Dima.Api.pdb
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Api\obj\Debug\net8.0\Dima.Api.genruntimeconfig.cache
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Api\obj\Debug\net8.0\ref\Dima.Api.dll
+C:\dev\ws-csharp\projects\DimaFinancial\Dima.Api\obj\Debug\net8.0\Dima.Api.sourcelink.json

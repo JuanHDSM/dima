@@ -62,6 +62,34 @@ app.MapDelete("v1/categories/{id}",
     .WithSummary("Excluir uma categoria")
     .Produces<Response<Category>>();
 
+
+app.MapGet("v1/categories",
+    async (ICategoryHandler handler) =>
+    {
+        var request = new GetAllCategoriesRequest
+        {
+            UserId = "holy@holy.io"
+        };
+        return await handler.GetAllAsync(request);
+    })
+    .WithName("Categories: Get All Categoies")
+    .WithSummary("Retorna todas as categorias de um usuário")
+    .Produces<PagedResponse<List<Category>>>();
+
+app.MapGet("v1/categories/{id}",
+    async (ICategoryHandler handler, long id) =>
+    {
+        var request = new GetCategoryByIdRequest
+        {
+            Id = id,
+            UserId = "holy@holy.io"
+        };
+        return await handler.GetByIdAsync(request);
+    })
+    .WithName("Categories: Get By Id Category")
+    .WithSummary("Retorna uma categoria de um usuário")
+    .Produces<Response<Category>>();
+
 app.UseSwagger();
 app.UseSwaggerUI(); 
 

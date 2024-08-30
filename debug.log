@@ -1,1 +1,3 @@
 [0621/020007.414:ERROR:registration_protocol_win.cc(107)] CreateFile: O sistema n�o pode encontrar o arquivo especificado. (0x2)
+[0829/015947.359:ERROR:registration_protocol_win.cc(108)] CreateFile: O sistema não pode encontrar o arquivo especificado. (0x2)
+[0829/015947.363:ERROR:registration_protocol_win.cc(108)] CreateFile: O sistema não pode encontrar o arquivo especificado. (0x2)

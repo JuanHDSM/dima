@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Dima.Core.Responses
 {
-    public class PagedResponse<TData> : Response<TData> where TData : class
+    public class PagedResponse<TData> : Response<TData>
     {
 
         [JsonConstructor]
@@ -15,7 +15,7 @@ namespace Dima.Core.Responses
             PageSize = pageSize;
         }
 
-        public PagedResponse(TData data, int code, string? message = null)
+        public PagedResponse(TData? data, int code, string? message = null)
             :base(data, code, message)
         {
             

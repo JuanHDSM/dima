@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\dev\\ws-csharp\\projects\\DimaFinancial\\Dima.Core\\Dima.Core.csproj": {}
+    "C:\\dev\\projects\\dima\\Dima.Core\\Dima.Core.csproj": {}
   },
   "projects": {
-    "C:\\dev\\ws-csharp\\projects\\DimaFinancial\\Dima.Core\\Dima.Core.csproj": {
+    "C:\\dev\\projects\\dima\\Dima.Core\\Dima.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dev\\ws-csharp\\projects\\DimaFinancial\\Dima.Core\\Dima.Core.csproj",
+        "projectUniqueName": "C:\\dev\\projects\\dima\\Dima.Core\\Dima.Core.csproj",
         "projectName": "Dima.Core",
-        "projectPath": "C:\\dev\\ws-csharp\\projects\\DimaFinancial\\Dima.Core\\Dima.Core.csproj",
-        "packagesPath": "C:\\Users\\jumendes\\.nuget\\packages\\",
-        "outputPath": "C:\\dev\\ws-csharp\\projects\\DimaFinancial\\Dima.Core\\obj\\",
+        "projectPath": "C:\\dev\\projects\\dima\\Dima.Core\\Dima.Core.csproj",
+        "packagesPath": "C:\\Users\\juanh\\.nuget\\packages\\",
+        "outputPath": "C:\\dev\\projects\\dima\\Dima.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\jumendes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\juanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -65,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,3 +1,0 @@
-C:\dev\ws-csharp\projects\DimaFinancial\out\Dima.Core.dll
-C:\dev\ws-csharp\projects\DimaFinancial\out\Dima.Core.deps.json
-C:\dev\ws-csharp\projects\DimaFinancial\out\Dima.Core.pdb

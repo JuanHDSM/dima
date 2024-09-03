@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dima.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240902214339_InitialCreate")]
+    [Migration("20240903231452_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

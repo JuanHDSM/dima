@@ -9,14 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var cnnStr = builder
-    .Configuration
-    .GetConnectionString("DefaultConnection") ?? string.Empty;
+var cnnStr = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
 builder.Services.AddDbContext<AppDbContext>(
     options =>
         {
-            options.UseMySql(cnnStr, new MySqlServerVersion(new Version(8, 0, 2)));
+            options.UseMySql(cnnStr, ServerVersion.AutoDetect(cnnStr));
         }
 );
 

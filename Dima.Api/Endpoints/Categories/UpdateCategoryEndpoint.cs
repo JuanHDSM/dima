@@ -28,8 +28,8 @@ namespace Dima.Api.Endpoints.Categories
             request.UserId = "holy@holy.io";
             var result = await handler.UpdateAsync(request);
             return result.IsSuccess 
-                ? TypedResults.Ok(result.Data) 
-                : TypedResults.BadRequest(result.Data);
+                ? TypedResults.Ok(result) 
+                : TypedResults.BadRequest(result);
         }
     }
 }

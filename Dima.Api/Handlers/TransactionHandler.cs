@@ -67,6 +67,7 @@ namespace Dima.Api.Handlers
             {
                 var transaction = await context.Transactions
                     .AsNoTracking()
+                    .Include(x => x.Category)
                     .FirstOrDefaultAsync(x =>
                         x.Id == request.Id && x.UserId == request.UserId
                     );
@@ -103,6 +104,7 @@ namespace Dima.Api.Handlers
                         => x.CreateAt >= request.StartDate 
                         && x.CreateAt <= request.EndDate 
                         && x.UserId == request.UserId)
+                    .Include(x => x.Category)
                     .OrderBy(x => x.CreateAt);
 
                 var transactions = await query

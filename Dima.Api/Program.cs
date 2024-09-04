@@ -22,6 +22,7 @@ builder.Services.AddSwaggerGen(x =>
 });
 
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
+builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
 
 var app = builder.Build();
 app.UseSwagger();

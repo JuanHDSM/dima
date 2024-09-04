@@ -3,7 +3,6 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Dima.Core.Responses;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Dima.Api.Endpoints.Categories
 {
@@ -26,7 +25,7 @@ namespace Dima.Api.Endpoints.Categories
         {
             var result =  await handler.CreateAsync(request);
             return result.IsSuccess
-                ? TypedResults.Created($"{result.Data?.Id}", result)
+                ? TypedResults.Created($"/{result.Data?.Id}", result)
                 : TypedResults.BadRequest(result);
         }
     }

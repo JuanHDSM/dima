@@ -34,7 +34,9 @@ namespace Dima.Api.Endpoints.Categories
             };
 
             var result = await handler.GetAllAsync(request);
-            return result.IsSuccess ? TypedResults.Ok(result) : TypedResults.BadRequest(result);
+            return result.IsSuccess 
+                ? TypedResults.Ok(result) 
+                : TypedResults.BadRequest(result);
         }
     }
 }

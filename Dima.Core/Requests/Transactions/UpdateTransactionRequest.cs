@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Dima.Core.Enums;
 
 namespace Dima.Core.Requests.Transactions
 {
     public class UpdateTransactionRequest : BaseRequest
     {
+        [JsonIgnore]
         public long Id { get; set; }
         [Required(ErrorMessage = "Título inválido")]
         public string Title { get; set; } = string.Empty;

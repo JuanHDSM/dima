@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.Core;
 using Dima.Core.Handlers;
@@ -11,16 +12,15 @@ namespace Dima.Api.Endpoints.Categories
     public class GetAllCategoriesEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
-        {
-            app.MapGet("/", HandleAsync)
+            => app.MapGet("/", HandleAsync)
                 .WithName("Categories: Get All Categories")
                 .WithSummary("Obtem todas as categorias de um usuário")
                 .WithDescription("Obtem todas as categorias de um usuário")
                 .WithOrder(5)
                 .Produces<PagedResponse<List<Category>?>>();
-        }
 
         private static async Task<IResult> HandleAsync(
+            ClaimsPrincipal user,
             ICategoryHandler handler,
             [FromQuery]int pageNumber = Configuration.DefaultPageNumber,
             [FromQuery]int pageSize = Configuration.DefaultPageSize
@@ -28,7 +28,7 @@ namespace Dima.Api.Endpoints.Categories
         {
             var request = new GetAllCategoriesRequest
             {
-                UserId = "holy@holy.io",
+                UserId = user.Identity?.Name ?? string.Empty,
                 PageNumber = pageNumber,
                 PageSize = pageSize
             };

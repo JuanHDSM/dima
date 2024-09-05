@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Transactions;
 using Dima.Api.Common.Api;
 using Dima.Core.Handlers;
@@ -9,16 +10,15 @@ namespace Dima.Api.Endpoints.Transactions
     public class GetTransactionByIdEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
-        {
-            app.MapGet("/{id}", HandleAsync)
+            => app.MapGet("/{id}", HandleAsync)
             .WithName("Transactions: Get Transaction By Id")
                 .WithSummary("Obtem uma transação")
                 .WithDescription("Obtem uma transação")
                 .WithOrder(4)
                 .Produces<Response<Transaction?>>();
-        }
 
         private static async Task<IResult> HandleAsync(
+            ClaimsPrincipal user,
             ITransactionHandler handler,
             long id
         )
@@ -26,7 +26,7 @@ namespace Dima.Api.Endpoints.Transactions
             var request = new GetTransactionByIdRequest
             {
                 Id = id,
-                UserId = "holy@holy.io"
+                UserId = user.Identity?.Name ?? string.Empty
             };
 
             var result = await handler.GetByIdAsync(request);

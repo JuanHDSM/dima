@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
@@ -9,16 +10,15 @@ namespace Dima.Api.Endpoints.Categories
     public class DeleteCategoryEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
-        {
-            app.MapDelete("/{id}", HandleAsync)
+            => app.MapDelete("/{id}", HandleAsync)
                 .WithName("Categories: Delete")
                 .WithSummary("Exclui uma categoria")
                 .WithDescription("Exclui uma categoria")
                 .WithOrder(3)
                 .Produces<Response<Category?>>();
-        }
 
         private static async Task<IResult> HandleAsync(
+            ClaimsPrincipal user,
             ICategoryHandler handler,
             long id
         )
@@ -26,7 +26,7 @@ namespace Dima.Api.Endpoints.Categories
             var request = new DeleteCategoryRequest
             {
                 Id = id,
-                UserId = "holy@holy.io"
+                UserId = user.Identity?.Name ?? string.Empty
             };
             
             var result = await handler.DeleteAsync(request);

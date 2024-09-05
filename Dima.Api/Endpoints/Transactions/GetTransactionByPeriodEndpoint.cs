@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.Core;
 using Dima.Core.Handlers;
@@ -11,16 +12,15 @@ namespace Dima.Api.Endpoints.Transactions
     public class GetTransactionByPeriodEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
-        {
-            app.MapGet("/", HandleAsync)
+            => app.MapGet("/", HandleAsync)
                 .WithName("Transactions: Get Transactions By Period")
                 .WithSummary("Obtem transações de um determinado intervalo de datas")
                 .WithDescription("Obtem transações de um determinado intervalo de datas")
                 .WithOrder(5)
                 .Produces<PagedResponse<List<Transaction>?>>();
-        }
 
         private static async Task<IResult> HandleAsync(
+            ClaimsPrincipal user,
             ITransactionHandler handler,
             [FromQuery] DateTime? startDate,
             [FromQuery] DateTime? endDate,
@@ -29,7 +29,7 @@ namespace Dima.Api.Endpoints.Transactions
         )
         {
             var request = new GetTransactionsByPeriodRequest {
-                UserId = "holy@holy.io",
+                UserId = user.Identity?.Name ?? string.Empty,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 StartDate = startDate,

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Transactions;
 using Dima.Api.Common.Api;
 using Dima.Core.Handlers;
@@ -9,16 +10,15 @@ namespace Dima.Api.Endpoints.Transactions
     public class DeleteTransactionEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
-        {
-            app.MapDelete("/{id}", HandleAsync)
+            => app.MapDelete("/{id}", HandleAsync)
                 .WithName("Transactions: Delete")
                 .WithSummary("Exclui uma transação")
                 .WithDescription("Exclui uma transação")
                 .WithOrder(3)
                 .Produces<Response<Transaction?>>();
-        }
 
         private static async Task<IResult> HandleAsync(
+            ClaimsPrincipal user,
             ITransactionHandler handler,
             long id
         )
@@ -26,7 +26,7 @@ namespace Dima.Api.Endpoints.Transactions
             var request = new DeleteTransactionRequest
             {
                 Id = id,
-                UserId = "holy@holy.io"
+                UserId = user.Identity?.Name ?? string.Empty
             };
 
             var result = await handler.DeleteAsync(request);

@@ -1,6 +1,5 @@
 C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\appsettings.Development.json
 C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\appsettings.json
-C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\appsettings.Production.json
 C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\Dima.Api.exe
 C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\Dima.Api.deps.json
 C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\Dima.Api.runtimeconfig.json
@@ -223,3 +222,9 @@ C:\dev\ws-csharp\projects\DimaFinancial\Dima.Api\obj\Debug\net8.0\refint\Dima.Ap
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Api\obj\Debug\net8.0\Dima.Api.pdb
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Api\obj\Debug\net8.0\Dima.Api.genruntimeconfig.cache
 C:\dev\ws-csharp\projects\DimaFinancial\Dima.Api\obj\Debug\net8.0\ref\Dima.Api.dll
+C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\dev\projects\dima\Dima.Api\bin\Debug\net8.0\Microsoft.Extensions.Options.dll

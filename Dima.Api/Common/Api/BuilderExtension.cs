@@ -56,8 +56,8 @@ namespace Dima.Api.Common.Api
                             policy => 
                                 policy
                                     .WithOrigins([
-                                        Configuration.BackendUrl,
-                                        Configuration.FrontendUrl
+                                        Configuration.FrontendUrl,
+                                        Configuration.BackendUrl
                                     ])
                                     .AllowAnyMethod()
                                     .AllowAnyHeader()

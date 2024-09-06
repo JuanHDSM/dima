@@ -13,9 +13,9 @@ builder.AddServices();
 
 var app = builder.Build();
 
+app.UseDocumentation();
 app.UseCors(ApiConfiguration.CorsPolicyName);
 app.UseSecurity();
-app.UseDocumentation();
 app.MapEndpoints();
 
 app.Run();

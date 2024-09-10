@@ -32,6 +32,10 @@ COPY Dima.Web/ Dima.Web/
 COPY Dima.Core/ Dima.Core/
 
 RUN dotnet workload install wasm-tools
+RUN dotnet tool install -g dotnet-serve
+
+# Add the .dotnet/tools directory to the PATH
+ENV PATH="$PATH:/root/.dotnet/tools"
 
 WORKDIR /src/Dima.Web
 RUN dotnet publish Dima.Web.csproj -c Release -o /app/out

@@ -30,6 +30,9 @@ RUN dotnet restore Dima.Web/Dima.Web.csproj
 
 COPY Dima.Web/ Dima.Web/
 COPY Dima.Core/ Dima.Core/
+
+RUN dotnet workload install wasm-tools
+
 WORKDIR /src/Dima.Web
 RUN dotnet publish Dima.Web.csproj -c Release -o /app/out
 

@@ -11,7 +11,7 @@ COPY Dima.Core/ Dima.Core/
 WORKDIR /src/Dima.Api
 RUN dotnet publish Dima.Api.csproj -c Release -o /app/out
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS buil-api
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base-api
 WORKDIR /app
 
 COPY --from=build-api /app/out .
@@ -33,11 +33,11 @@ COPY Dima.Core/ Dima.Core/
 WORKDIR /src/Dima.Web
 RUN dotnet publish Dima.Web.csproj -c Release -o /app/out
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS buil-frotn
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base-wasm
 WORKDIR /app
 
 COPY --from=build-wasm /app/out/wwwroot ./wwwroot
 
-EXPOSE 5432
+EXPOSE 80
 
-ENTRYPOINT ["dotnet", "Dima.Web.dll"]
+ENTRYPOINT ["dotnet-serve", "-d", "wwwroot"]

@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Dima.Api"
+    "\\Dima.Web",
+    "\\Dima.Web\\wwwroot",
+    "\\Dima.Web\\wwwroot\\css"
   ],
+  "SelectedNode": "\\Dima.Web\\wwwroot\\index.html",
   "PreviewInSolutionExplorer": false
 }

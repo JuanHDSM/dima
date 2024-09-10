@@ -31,6 +31,11 @@ RUN dotnet restore Dima.Web/Dima.Web.csproj
 COPY Dima.Web/ Dima.Web/
 COPY Dima.Core/ Dima.Core/
 
+# Install Python (required for Blazor WebAssembly build)
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip && \
+    apt-get clean
+
 RUN dotnet workload install wasm-tools
 RUN dotnet tool install -g dotnet-serve
 

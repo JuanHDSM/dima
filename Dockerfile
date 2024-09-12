@@ -1,4 +1,3 @@
-# Build stage for the ASP.NET Core backend API
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-api
 WORKDIR /src
 
@@ -19,4 +18,3 @@ COPY --from=build-api /app/out .
 EXPOSE 80
 
 ENTRYPOINT ["dotnet", "Dima.Api.dll"]
-

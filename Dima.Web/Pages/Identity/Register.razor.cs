@@ -23,6 +23,10 @@ namespace Dima.Web.Pages.Identity
         #region Properties
         public bool IsBusy { get; set; } = false;
         public AuthRequest InputModel { get; set; } = new();
+
+        public bool _isShow;
+        public InputType PasswordInput = InputType.Password;
+        public string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
         #endregion
 
         #region Overrides
@@ -61,6 +65,23 @@ namespace Dima.Web.Pages.Identity
                 IsBusy = false; 
             }
         }
+
+        public void ShowPassword()
+        {
+            if(_isShow)
+            {
+                _isShow = false;
+                PasswordInput = InputType.Password;
+                PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            }
+            else
+            {
+                _isShow = true;
+                PasswordInput = InputType.Text;
+                PasswordInputIcon = Icons.Material.Filled.Visibility;
+            }
+        }
+
         #endregion
     }
 }

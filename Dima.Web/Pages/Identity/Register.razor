@@ -24,12 +24,10 @@
                     For="@(() => InputModel.Email)"
                     @bind-Value="InputModel.Email" />
 
-                <MudTextField T="string" 
-                    Label="Senha" 
-                    HelperText="Campo obrigatório" 
-                    InputType="InputType.Password"
-                    For="@(() => InputModel.Email)" 
-                    @bind-Value="InputModel.Password" />
+                <MudTextField T="string" Label="Senha" HelperText="Campo obrigatório" InputType="@PasswordInput"
+                    For="@(() => InputModel.Password)" @bind-Value="InputModel.Password" Adornment="Adornment.End"
+                    AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowPassword"
+                    AdornmentAriaLabel="Show Password" />
 
                 <div class="d-flex mt-8">
                     @if (IsBusy)

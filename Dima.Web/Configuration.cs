@@ -32,7 +32,8 @@ namespace Dima.Web
                 Primary = Colors.LightGreen.Accent3,
                 Secondary = Colors.LightGreen.Darken3,
                 AppbarBackground = Colors.LightGreen.Accent3,
-                AppbarText = Colors.Shades.Black
+                AppbarText = Colors.Shades.Black,
+                PrimaryContrastText = "#000000"
             }
         };
     }

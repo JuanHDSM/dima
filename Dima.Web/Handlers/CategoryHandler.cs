@@ -18,7 +18,7 @@ namespace Dima.Web.Handlers
 
         public async Task<Response<Category?>> DeleteAsync(DeleteCategoryRequest request)
         {
-            var result = await _client.DeleteAsync("v1/categories");
+            var result = await _client.DeleteAsync($"v1/categories/{request.Id}");
             return await result.Content.ReadFromJsonAsync<Response<Category?>>()
                 ?? new Response<Category?>(null, 400, "Falha ao exluir a categoria");
         }
@@ -29,7 +29,7 @@ namespace Dima.Web.Handlers
         
 
         public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
-            => await _client.GetFromJsonAsync<Response<Category?>>("v1/categories")
+            => await _client.GetFromJsonAsync<Response<Category?>>($"v1/categories/{request.Id}")
                 ?? new Response<Category?>(null, 400, "Não foi possível obter a categoria");
         
 

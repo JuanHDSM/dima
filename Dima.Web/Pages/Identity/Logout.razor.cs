@@ -7,7 +7,7 @@ namespace Dima.Web.Pages.Identity
 {
     public partial class LogoutPage : ComponentBase
     {
-        #region Dependencies
+        #region Services
         [Inject]
         public ISnackbar Snackbar { get; set; } = null!;
         [Inject]

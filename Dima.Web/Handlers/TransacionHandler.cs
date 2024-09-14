@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using Dima.Core.Common.Extensions;
+using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
@@ -12,6 +13,10 @@ namespace Dima.Web.Handlers
         private readonly HttpClient _client = httpClientFactory.CreateClient(Configuration.HttpClientName);
         public async Task<Response<Transaction?>> CreateAsync(CreateTransactionRequest request)
         {
+            if(request.Type == ETransactionType.Withdraw && request.Amount > 0)
+            {
+                request.Amount *= -1;
+            }
             var result = await _client.PostAsJsonAsync("v1/transactions/", request);
             return await result.Content.ReadFromJsonAsync<Response<Transaction?>>()
                 ?? new Response<Transaction?>(null, 400, "Falha ao criar a categoria");
@@ -19,13 +24,13 @@ namespace Dima.Web.Handlers
 
         public async Task<Response<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
         {
-            var result = await _client.DeleteAsync("v1/transactions");
+            var result = await _client.DeleteAsync($"v1/transactions/{request.Id}");
             return await result.Content.ReadFromJsonAsync<Response<Transaction?>>()
                 ?? new Response<Transaction?>(null, 400, "Falha ao atualizar a categoria");
         }
 
         public async Task<Response<Transaction?>> GetByIdAsync(GetTransactionByIdRequest request)
-            => await _client.GetFromJsonAsync<Response<Transaction?>>("v1/transactions")
+            => await _client.GetFromJsonAsync<Response<Transaction?>>($"v1/transactions/{request.Id}")
                 ?? new Response<Transaction?>(null, 400, "Não foi possível obter a transação");
 
         public async Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetTransactionsByPeriodRequest request)
@@ -49,6 +54,10 @@ namespace Dima.Web.Handlers
 
         public async Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
         {
+            if (request.Type == ETransactionType.Withdraw && request.Amount > 0)
+            {
+                request.Amount *= -1;
+            }
             var result = await _client.PutAsJsonAsync($"v1/transactions/{request.Id}", request);
             return await result.Content.ReadFromJsonAsync<Response<Transaction?>>()
                 ?? new Response<Transaction?>(null, 400, "Falha ao atualizar a categoria");

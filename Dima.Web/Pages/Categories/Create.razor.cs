@@ -1,6 +1,5 @@
 using Dima.Core.Handlers;
 using Dima.Core.Requests.Categories;
-using Dima.Web.Handlers;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -8,8 +7,15 @@ namespace Dima.Web.Pages.Categories
 {
     public partial class CreateCategoryPage : ComponentBase
     {
+        #region Properties
 
-        #region Dependecies
+        public bool IsBusy { get; set; } = false;
+        public CreateCategoryRequest InputModel { get; set; } = new();
+
+        #endregion
+
+
+        #region Services
 
         [Inject]
         public ICategoryHandler Handler { get; set; } = null!;
@@ -19,14 +25,6 @@ namespace Dima.Web.Pages.Categories
 
         [Inject]
         public ISnackbar Snackbar { get; set; } = null!;
-
-        #endregion
-
-
-        #region Properties
-
-        public bool IsBusy { get; set; } = false;
-        public CreateCategoryRequest InputModel { get; set; } = new();
 
         #endregion
 

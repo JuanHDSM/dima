@@ -3,14 +3,14 @@
 
 <MudText Typo="Typo.h3">Categorias</MudText>
 
-<dir class="d-flex justify-end">
+<div class="d-flex justify-end">
     <MudButton
         Variant="Variant.Filled"
         Color="Color.Primary"
         StartIcon="@Icons.Material.TwoTone.Add"
         Href="/categories/create"
         >ADICIONAR CATEGORIA</MudButton>
-</dir>
+</div>
 
 <MudDataGrid Items="@Categories" Class="mt-8" Filterable="true" QuickFilter="Filter" Hideable="true">
     <ToolBarContent>

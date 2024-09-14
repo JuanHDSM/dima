@@ -17,6 +17,6 @@ namespace Dima.Core.Requests.Transactions
         [Required(ErrorMessage = "Categoria inválida")]
         public long CategoryId { get; set; }
         [Required(ErrorMessage = "Data inválida")]
-        public DateTime PaidOrReceivedAt { get; set; }
+        public DateTime? PaidOrReceivedAt { get; set; }
     }
 }

@@ -42,6 +42,43 @@ namespace Dima.Web.Pages.Transactions
         protected override async Task OnInitializedAsync()
         {
             IsBusy = true;
+            await GetTransactionByIdAsync();
+            await GetAllCategoriesAsync();
+
+        }
+
+        #endregion
+
+        #region Methods
+
+        public async Task OnValidSubmitAsync()
+        {
+            try
+            {
+                IsBusy = true;
+                var result = await Handler.UpdateAsync(InputModel);
+                if (result.IsSuccess)
+                {
+                    Snackbar.Add(result.Message!, Severity.Success);
+                    NavigationManager.NavigateTo("/entry/history");
+                }
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add(ex.Message, Severity.Error);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private async Task GetAllCategoriesAsync()
+        {
             try
             {
                 var categoryRequest = new GetAllCategoriesRequest();
@@ -53,6 +90,10 @@ namespace Dima.Web.Pages.Transactions
             {
                 Snackbar.Add(ex.Message, Severity.Error);
             }
+        }
+
+        private async Task GetTransactionByIdAsync()
+        {
 
             GetTransactionByIdRequest? request = null;
             try
@@ -80,33 +121,6 @@ namespace Dima.Web.Pages.Transactions
                         CategoryId = result.Data.CategoryId,
                         PaidOrReceivedAt = result.Data.PaidOrReceivedAt
                     };
-            }
-            catch (Exception ex)
-            {
-                Snackbar.Add(ex.Message, Severity.Error);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-
-        }
-
-        #endregion
-
-        #region Methods
-
-        public async Task OnValidSubmitAsync()
-        {
-            try
-            {
-                IsBusy = true;
-                var result = await Handler.UpdateAsync(InputModel);
-                if (result.IsSuccess)
-                {
-                    Snackbar.Add(result.Message!, Severity.Success);
-                    NavigationManager.NavigateTo("/categories");
-                }
             }
             catch (Exception ex)
             {

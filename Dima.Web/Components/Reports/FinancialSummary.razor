@@ -1,0 +1,45 @@
+@inherits FinancialSummaryComponent
+
+<h3 class="d-flex align-center">
+    <strong>
+        SALDO
+    </strong>
+    <MudSpacer />
+    <MudIconButton Icon="@(ShowValues ? Icons.Material.TwoTone.VisibilityOff : Icons.Material.TwoTone.Visibility)"
+        OnClick="ToggleShowValues" />
+</h3>
+@if (Summary is null)
+{
+    <div class="d-flex align-center justify-center" style="height: 350px;">
+        <MudProgressCircular Indeterminate=true Color="Color.Primary" />
+    </div>
+}
+else
+{
+    @if(Summary.Total > 0)
+    {
+        <MudText Color="Color.Success" Typo="Typo.h4" >
+            @(ShowValues ? Summary.Total.ToString("C") : "R$ ********")
+        </MudText>
+    }
+    else
+    {
+        <MudText Color="Color.Error" Typo="Typo.h4">
+            @(ShowValues ? Summary.Total.ToString("C") : "R$ ********")
+        </MudText>
+    }
+    <br />
+    <p>
+        <strong>Enttradas</strong>
+        <MudText Color="Color.Success">
+            @(ShowValues ? Summary.Incomes.ToString("C") : "R$ ********")
+        </MudText>
+    </p>
+    <br />
+    <p>
+        <strong>Enttradas</strong>
+        <MudText Color="Color.Error">
+            @(ShowValues ? Summary.Expenses.ToString("C") : "R$ ********")
+        </MudText>
+    </p>
+}

@@ -47,7 +47,7 @@ namespace Dima.Web.Handlers
 
             var url = $"v1/transactions?startDate={startDate}&endDate={endDate}";
 
-            return await _client.GetFromJsonAsync<PagedResponse<List<Transaction>?>>("v1/transactions")
+            return await _client.GetFromJsonAsync<PagedResponse<List<Transaction>?>>(url)
                 ?? new PagedResponse<List<Transaction>?>(null, 400, "Não foi possível obter as transações");
         }
 

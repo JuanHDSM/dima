@@ -10,7 +10,7 @@ namespace Dima.Web.Handlers
     {
         private readonly HttpClient _client = httpClientFactory.CreateClient(Configuration.HttpClientName);
         public async Task<Response<List<ExpensesByCategory>?>> GetExpensesByCategoryReportAsync(GetExpensesByCategoryRequest request)
-            => await _client.GetFromJsonAsync<Response<List<ExpensesByCategory>?>>("v1/resports/expenses")
+            => await _client.GetFromJsonAsync<Response<List<ExpensesByCategory>?>>("v1/reports/expenses")
                 ?? new Response<List<ExpensesByCategory>?> (null, 400, "Falha ao obter despesas por categoria.");
 
         public async Task<Response<FinancialSummary?>> GetFinancialSummaryReportAsync(GetFinancialSummaryRequest request)
@@ -22,7 +22,7 @@ namespace Dima.Web.Handlers
                 ?? new Response<List<IncomesAndExpenses>?>(null, 400, "Falha ao obter entradas e saídas.");
 
         public async Task<Response<List<IncomesByCategory>?>> GetIncomesByCategoryReportAsync(GetIncomesByCategoryRequest request)
-            => await _client.GetFromJsonAsync<Response<List<IncomesByCategory>?>>("v1/reports/expenses")
+            => await _client.GetFromJsonAsync<Response<List<IncomesByCategory>?>>("v1/reports/incomes")
                 ?? new Response<List<IncomesByCategory>?>(null, 400, "Falha ao obter entradas por categoria.");
     }
 }

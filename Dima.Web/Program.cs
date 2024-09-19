@@ -31,6 +31,7 @@ builder.Services.AddHttpClient(Configuration.HttpClientName, options => {
 builder.Services.AddTransient<IAccountHandler, AccountHandler>();
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
 builder.Services.AddTransient<ITransactionHandler, TransacionHandler>();
+builder.Services.AddTransient<IReportHandler, ReportHandler>();
 
 builder.Services.AddLocalization();
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("pt-BR");

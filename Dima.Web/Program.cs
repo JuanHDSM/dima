@@ -6,6 +6,7 @@ using Dima.Web.Security;
 using Microsoft.AspNetCore.Components.Authorization;
 using Dima.Core.Handlers;
 using Dima.Web.Handlers;
+using System.Globalization;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -28,5 +29,12 @@ builder.Services.AddHttpClient(Configuration.HttpClientName, options => {
 }).AddHttpMessageHandler<CookieHandler>();
 
 builder.Services.AddTransient<IAccountHandler, AccountHandler>();
+builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
+builder.Services.AddTransient<ITransactionHandler, TransacionHandler>();
+builder.Services.AddTransient<IReportHandler, ReportHandler>();
+
+builder.Services.AddLocalization();
+CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("pt-BR");
+CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("pt-BR");
 
 await builder.Build().RunAsync();

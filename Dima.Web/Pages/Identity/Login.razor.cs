@@ -8,7 +8,15 @@ namespace Dima.Web.Pages.Identity
 {
     public partial class LoginPage : ComponentBase
     {
-        #region Dependencies
+        #region Properties
+        public bool IsBusy { get; set; } = false;
+        public AuthRequest InputModel { get; set; } = new();
+        public bool isShow;
+        public InputType PasswordInput = InputType.Password;
+        public string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+        #endregion
+
+        #region Services
         [Inject]
         public ISnackbar Snackbar { get; set; } = null!;
         [Inject]
@@ -17,11 +25,6 @@ namespace Dima.Web.Pages.Identity
         public NavigationManager NavigationManager { get; set; } = null!;
         [Inject]
         public ICookieAuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
-        #endregion
-
-        #region Properties
-        public bool IsBusy { get; set; } = false;
-        public AuthRequest InputModel { get; set; } = new();
         #endregion
 
         #region Overrides
@@ -60,6 +63,22 @@ namespace Dima.Web.Pages.Identity
             
             {
                 IsBusy = false;
+            }
+        }
+
+        public void ShowPassword()
+        {
+            if(isShow)
+            {
+                isShow = false;
+                PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+                PasswordInput = InputType.Password;
+            }
+        else
+            {
+                isShow = true;
+                PasswordInputIcon = Icons.Material.Filled.Visibility;
+                PasswordInput = InputType.Text;
             }
         }
         #endregion

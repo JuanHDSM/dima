@@ -2,14 +2,22 @@ using Dima.Core.Handlers;
 using Dima.Core.Requests.Account;
 using Dima.Web.Security;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 
 namespace Dima.Web.Pages.Identity
 {
     public partial class RegisterPage : ComponentBase
     {
-        #region Dependencies
+        #region Properties
+        public bool IsBusy { get; set; } = false;
+        public AuthRequest InputModel { get; set; } = new();
+
+        public bool _isShow;
+        public InputType PasswordInput = InputType.Password;
+        public string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+        #endregion
+
+        #region Services
         [Inject]
         public ISnackbar Snackbar { get; set; } = null!;
         [Inject]
@@ -18,11 +26,6 @@ namespace Dima.Web.Pages.Identity
         public NavigationManager NavigationManager { get; set; } = null!;
         [Inject]
         public ICookieAuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
-        #endregion
-
-        #region Properties
-        public bool IsBusy { get; set; } = false;
-        public AuthRequest InputModel { get; set; } = new();
         #endregion
 
         #region Overrides
@@ -61,6 +64,23 @@ namespace Dima.Web.Pages.Identity
                 IsBusy = false; 
             }
         }
+
+        public void ShowPassword()
+        {
+            if(_isShow)
+            {
+                _isShow = false;
+                PasswordInput = InputType.Password;
+                PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            }
+            else
+            {
+                _isShow = true;
+                PasswordInput = InputType.Text;
+                PasswordInputIcon = Icons.Material.Filled.Visibility;
+            }
+        }
+
         #endregion
     }
 }

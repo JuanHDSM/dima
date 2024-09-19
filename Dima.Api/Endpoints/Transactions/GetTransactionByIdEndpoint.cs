@@ -11,7 +11,7 @@ namespace Dima.Api.Endpoints.Transactions
     {
         public static void Map(IEndpointRouteBuilder app)
             => app.MapGet("/{id}", HandleAsync)
-            .WithName("Transactions: Get Transaction By Id")
+                .WithName("Transactions: Get Transaction By Id")
                 .WithSummary("Obtem uma transação")
                 .WithDescription("Obtem uma transação")
                 .WithOrder(4)

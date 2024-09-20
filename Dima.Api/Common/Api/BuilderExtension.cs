@@ -62,6 +62,7 @@ namespace Dima.Api.Common.Api
                                     .AllowAnyMethod()
                                     .AllowAnyHeader()
                                     .AllowCredentials()
+                                    .SetIsOriginAllowed(origin => true)
                                     )
             );
         }

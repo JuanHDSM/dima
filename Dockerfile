@@ -38,29 +38,6 @@ COPY --from=build /app/publish .
 
 # Definindo a porta para expor a API (ajuste conforme necessário)
 EXPOSE 80
-EXPOSE 443
 
 # Configurando o entrypoint para iniciar a API ASP.NET junto com o Blazor WebAssembly
 ENTRYPOINT ["dotnet", "Dima.Api.dll"]
-
-
-# FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-api
-# WORKDIR /src
-
-# COPY Dima.Api/Dima.Api.csproj Dima.Api/
-# COPY Dima.Core/Dima.Core.csproj Dima.Core/
-# RUN dotnet restore Dima.Api/Dima.Api.csproj
-
-# COPY Dima.Api/ Dima.Api/
-# COPY Dima.Core/ Dima.Core/
-# WORKDIR /src/Dima.Api
-# RUN dotnet publish Dima.Api.csproj -c Release -o /app/out
-
-# FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS buil-api
-# WORKDIR /app
-
-# COPY --from=build-api /app/out .
-
-# EXPOSE 80
-
-# ENTRYPOINT ["dotnet", "Dima.Api.dll"]

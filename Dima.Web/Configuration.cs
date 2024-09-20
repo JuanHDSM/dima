@@ -17,23 +17,23 @@ namespace Dima.Web
             },
             PaletteLight = new PaletteLight()
             {
-                Primary = "#1EFA2D",
-                PrimaryContrastText = "#000000",
-                Secondary = Colors.LightGreen.Darken3,
+                Primary = Colors.LightBlue.Accent2,
+                PrimaryContrastText = "#ffffff",
+                Secondary = Colors.Lime.Lighten1,
                 Background = Colors.Gray.Lighten4,
-                AppbarBackground = "#1EFA2D",
-                AppbarText = Colors.Shades.Black,
+                AppbarBackground = Colors.LightBlue.Darken4,
+                AppbarText = Colors.Shades.White,
                 TextPrimary = Colors.Shades.Black,
                 DrawerText = Colors.Shades.White,
-                DrawerBackground = Colors.Green.Darken4
+                DrawerBackground = Colors.LightBlue.Darken4
             },
             PaletteDark = new PaletteDark()
             {
-                Primary = Colors.LightGreen.Accent3,
-                Secondary = Colors.LightGreen.Darken3,
-                AppbarBackground = Colors.LightGreen.Accent3,
-                AppbarText = Colors.Shades.Black,
-                PrimaryContrastText = "#000000"
+                Primary = Colors.LightBlue.Darken4,
+                Secondary = Colors.LightBlue.Accent3,
+                AppbarBackground = Colors.LightBlue.Darken4,
+                AppbarText = Colors.Shades.White,
+                PrimaryContrastText = "#ffffff"
             }
         };
     }

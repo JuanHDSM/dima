@@ -10,12 +10,20 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '8.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.sln') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
         run: dotnet restore
@@ -28,6 +36,9 @@ jobs:
 
       - name: Install Railway CLI
         run: npm i -g @railway/cli
+
+      - name: Verify Railway CLI
+        run: railway --version
 
       - name: Deploy to Railway
         run: railway up --service dima-api

@@ -52,6 +52,8 @@ namespace Dima.Api.Endpoints
                         .MapEndpoint<GetExpensesByCategoryEndpoint>()
                         .MapEndpoint<GetFinancialSummaryEndpoint>();
 
+            app.MapFallbackToFile("index.html");
+
         }
 
         private static IEndpointRouteBuilder MapEndpoint<TEndpoint>(this IEndpointRouteBuilder app)

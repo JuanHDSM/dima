@@ -4,6 +4,7 @@ using Dima.Api.Endpoints.Identity;
 using Dima.Api.Endpoints.Reports;
 using Dima.Api.Endpoints.Transactions;
 using Dima.Api.Models;
+using stocks.Endpoints;
 
 namespace Dima.Api.Endpoints
 {
@@ -45,12 +46,17 @@ namespace Dima.Api.Endpoints
                 .MapEndpoint<GetRolesEndpoint>();
 
             endpoint.MapGroup("v1/reports")
-                        .WithTags("Reports")
-                        .RequireAuthorization()
-                        .MapEndpoint<GetIncomesAndExpensesEndpoint>()
-                        .MapEndpoint<GetIncomesByCategoryEndpoint>()
-                        .MapEndpoint<GetExpensesByCategoryEndpoint>()
-                        .MapEndpoint<GetFinancialSummaryEndpoint>();
+                .WithTags("Reports")
+                .RequireAuthorization()
+                .MapEndpoint<GetIncomesAndExpensesEndpoint>()
+                .MapEndpoint<GetIncomesByCategoryEndpoint>()
+                .MapEndpoint<GetExpensesByCategoryEndpoint>()
+                .MapEndpoint<GetFinancialSummaryEndpoint>();
+
+            endpoint.MapGroup("v1/stocks")
+                .WithTags("Stocks")
+                .RequireAuthorization()
+                .MapEndpoint<GetAllStocksEndpoints>();
 
             app.MapFallbackToFile("index.html");
 

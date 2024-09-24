@@ -13,8 +13,11 @@ namespace Dima.Api.Common.Api
         public static void AddConfiguration(this WebApplicationBuilder builder)
         {
             Configuration.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? string.Empty;
-            Configuration.BackendUrl = Environment.GetEnvironmentVariable("BACKEND_URL")  ?? builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
-            Configuration.FrontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL")  ?? builder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
+            Configuration.BackendUrl = builder.Configuration.GetValue<string>("BackendUrl") ?? Environment.GetEnvironmentVariable("BACKEND_URL") ?? string.Empty;
+            Configuration.FrontendUrl = builder.Configuration.GetValue<string>("FrontendUrl") ?? Environment.GetEnvironmentVariable("FRONTEND_URL") ?? string.Empty;
+            Configuration.StockApiUrl = builder.Configuration.GetValue<string>("StockApiUrl") ?? Environment.GetEnvironmentVariable("StockApiUrl") ?? string.Empty;
+            
+
         }
 
         public static void AddDocumentation(this WebApplicationBuilder builder)
@@ -57,7 +60,8 @@ namespace Dima.Api.Common.Api
                                 policy
                                     .WithOrigins([
                                         Configuration.FrontendUrl,
-                                        Configuration.BackendUrl
+                                        Configuration.BackendUrl,
+                                        Configuration.StockApiUrl
                                     ])
                                     .AllowAnyMethod()
                                     .AllowAnyHeader()
@@ -72,6 +76,7 @@ namespace Dima.Api.Common.Api
             builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
             builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
             builder.Services.AddTransient<IReportHandler, ReportHandler>();
+            builder.Services.AddTransient<IStockHandler, StockHandler>();
         }
     }
     

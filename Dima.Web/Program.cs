@@ -24,7 +24,8 @@ builder.Services.AddMudServices();
 
 builder.Services.AddAuthorizationCore();
 
-builder.Services.AddHttpClient(Configuration.HttpClientName, options => {
+builder.Services.AddHttpClient(Configuration.HttpClientName, options =>
+{
     options.BaseAddress = new Uri(Configuration.BackendUrl);
 }).AddHttpMessageHandler<CookieHandler>();
 
@@ -32,6 +33,7 @@ builder.Services.AddTransient<IAccountHandler, AccountHandler>();
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
 builder.Services.AddTransient<ITransactionHandler, TransacionHandler>();
 builder.Services.AddTransient<IReportHandler, ReportHandler>();
+builder.Services.AddTransient<IStockHandler, StockHandler>();
 
 builder.Services.AddLocalization();
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("pt-BR");

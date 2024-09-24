@@ -13,7 +13,7 @@ namespace Dima.Api.Handlers
         {
             try
             {
-                var result = await _client.GetFromJsonAsync<StockResponse>($"/api/quote/list?limit=1619&page=1&token={Configuration.TokenStockService}");
+                var result = await _client.GetFromJsonAsync<StockResponse>($"/api/quote/list?token={Configuration.TokenStockService}");
                 return new Response<StockResponse>(result);
             }
             catch (Exception e)

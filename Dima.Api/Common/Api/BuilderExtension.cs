@@ -60,7 +60,8 @@ namespace Dima.Api.Common.Api
                                     .WithOrigins([
                                         Configuration.FrontendUrl,
                                         Configuration.BackendUrl,
-                                        Configuration.StockApiUrl
+                                        Configuration.StockApiUrl,
+                                        "https://dima-api-production.up.railway.app"
                                     ])
                                     .AllowAnyMethod()
                                     .AllowAnyHeader()

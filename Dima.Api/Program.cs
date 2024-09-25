@@ -17,9 +17,12 @@ builder.AddServices();
 
 var app = builder.Build();
 
+app.UseStaticFiles();
 app.UseDocumentation();
 app.UseCors(ApiConfiguration.CorsPolicyName);
 app.UseSecurity();
 app.MapEndpoints();
+
+app.MapFallbackToFile("index.html");
 
 app.Run();

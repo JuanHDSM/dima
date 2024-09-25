@@ -57,7 +57,6 @@ namespace Dima.Api.Endpoints
                 .WithTags("Stocks")
                 .RequireAuthorization()
                 .MapEndpoint<GetAllStocksEndpoints>();
-
         }
 
         private static IEndpointRouteBuilder MapEndpoint<TEndpoint>(this IEndpointRouteBuilder app)

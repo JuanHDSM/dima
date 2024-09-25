@@ -17,6 +17,7 @@ namespace Dima.Api.Common.Api
             Configuration.FrontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL")  ?? builder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
             Configuration.StockApiUrl = builder.Configuration.GetValue<string>("StockApiUrl") ?? Environment.GetEnvironmentVariable("StockApiUrl") ?? string.Empty;
             
+
         }
 
         public static void AddDocumentation(this WebApplicationBuilder builder)
@@ -65,6 +66,7 @@ namespace Dima.Api.Common.Api
                                     .AllowAnyMethod()
                                     .AllowAnyHeader()
                                     .AllowCredentials()
+                                    .SetIsOriginAllowed(origin => true)
                                     )
             );
         }

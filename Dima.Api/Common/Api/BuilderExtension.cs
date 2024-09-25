@@ -13,8 +13,8 @@ namespace Dima.Api.Common.Api
         public static void AddConfiguration(this WebApplicationBuilder builder)
         {
             Configuration.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? string.Empty;
-            Configuration.BackendUrl = builder.Configuration.GetValue<string>("BackendUrl") ?? Environment.GetEnvironmentVariable("BACKEND_URL") ?? string.Empty;
-            Configuration.FrontendUrl = builder.Configuration.GetValue<string>("FrontendUrl") ?? Environment.GetEnvironmentVariable("FRONTEND_URL") ?? string.Empty;
+            Configuration.BackendUrl = Environment.GetEnvironmentVariable("BACKEND_URL")  ?? builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
+            Configuration.FrontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL")  ?? builder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
             Configuration.StockApiUrl = builder.Configuration.GetValue<string>("StockApiUrl") ?? Environment.GetEnvironmentVariable("StockApiUrl") ?? string.Empty;
             
 

@@ -66,6 +66,9 @@ namespace Dima.Web.Pages.Stocks
             if (stock.Name.ToString().Contains(SearchTerm, StringComparison.OrdinalIgnoreCase))
                 return true;
 
+            if (stock.Type.ToString().Contains(SearchTerm, StringComparison.OrdinalIgnoreCase))
+                return true;
+
             return false;
         };
 

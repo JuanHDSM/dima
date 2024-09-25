@@ -31,17 +31,8 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: Install WASM Tools
-        run: dotnet tool install --global wasm-tools
-
-      - name: Add Dotnet Tools to PATH
-        run: echo "${HOME}/.dotnet/tools" >> $GITHUB_PATH
-
       - name: Publish
         run: dotnet publish -c Release -o out
-
-      - name: List published files
-        run: ls -R out
 
       - name: Install Railway CLI
         run: npm i -g @railway/cli

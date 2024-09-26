@@ -16,7 +16,7 @@ RUN dotnet build "Dima.Api/Dima.Api.csproj" -c Release -o /app/build
 RUN dotnet build "Dima.Web/Dima.Web.csproj" -c Release -o /app/build
 
 # Publicar o projeto Blazor WebAssembly (Front-end)
-RUN dotnet publish "Dima.Web/Dima.Web.csproj" -c Release -o /app/build/Dima.Web --no-icu
+RUN dotnet publish "Dima.Web/Dima.Web.csproj" -c Release -o /app/build/Dima.Web
 
 # Publicar o projeto ASP.NET API (Back-end)
 RUN dotnet publish "Dima.Api/Dima.Api.csproj" -c Release -o /app/publish

@@ -26,6 +26,6 @@ jobs:
 
       - name: Deploy to Railway
         run: |
-          railway up --service dima-api --image dima-api:latest
+          railway up --service dima-api -- --image dima-api:latest
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}

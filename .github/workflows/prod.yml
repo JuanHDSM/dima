@@ -15,17 +15,17 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Ou a versão que você precisa
+          node-version: '16'
 
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Build Docker Image
+      - name: Build Docker Image (optional)
         run: |
           docker build -t dima-api:latest .
 
       - name: Deploy to Railway
         run: |
-          railway up --service dima-api -- --image dima-api:latest
+          railway up --service dima-api
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}

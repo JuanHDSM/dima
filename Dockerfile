@@ -10,7 +10,7 @@ RUN dotnet restore "Dima.Api/Dima.Api.csproj"
 RUN dotnet restore "Dima.Web/Dima.Web.csproj"
 
 # Publica o projeto Blazor WebAssembly (Front-end)
-RUN dotnet publish "Dima.Web/Dima.Web.csproj" -c Release -o /app/build/Dima.Web
+RUN dotnet publish "Dima.Web/Dima.Web.csproj" -c Release -o /app/publish
 
 # Publica o projeto ASP.NET API (Back-end)
 RUN dotnet publish "Dima.Api/Dima.Api.csproj" -c Release -o /app/publish
@@ -23,7 +23,7 @@ WORKDIR /app
 COPY --from=build /app/publish . 
 
 # Copia os arquivos do Blazor WebAssembly para o wwwroot da API
-COPY --from=build /app/build/Dima.Web/wwwroot ./wwwroot
+COPY --from=build /app/publish/wwwroot ./wwwroot
 
 # Expondo a porta 80
 EXPOSE 80

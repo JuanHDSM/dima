@@ -5,7 +5,6 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <BlazorWebAssemblyLoadGlobalizationData>true</BlazorWebAssemblyLoadGlobalizationData>
-    <BlazorWebAssemblyIcuDataMode>Invariant</BlazorWebAssemblyIcuDataMode>
   </PropertyGroup>
 
   <ItemGroup>

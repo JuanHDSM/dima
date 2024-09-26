@@ -20,7 +20,7 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Build Docker Image (optional)
+      - name: Build Docker Image
         run: |
           docker build -t dima-api:latest .
 

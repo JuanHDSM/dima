@@ -24,11 +24,8 @@ jobs:
         run: |
           docker build -t dima-api:latest .
 
-      - name: Login to Railway
-        run: railway login
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
       - name: Deploy to Railway
         run: |
           railway up --service dima-api --image dima-api:latest
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}

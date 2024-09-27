@@ -2,6 +2,7 @@ using Dima.Api.Common.Api;
 using Dima.Api.Endpoints.Categories;
 using Dima.Api.Endpoints.Identity;
 using Dima.Api.Endpoints.Reports;
+using Dima.Api.Endpoints.Stocks;
 using Dima.Api.Endpoints.Transactions;
 using Dima.Api.Models;
 using stocks.Endpoints;
@@ -56,7 +57,8 @@ namespace Dima.Api.Endpoints
             endpoint.MapGroup("v1/stocks")
                 .WithTags("Stocks")
                 .RequireAuthorization()
-                .MapEndpoint<GetAllStocksEndpoints>();
+                .MapEndpoint<GetAllStocksEndpoints>()
+                .MapEndpoint<GetStocksBySymbolEndpoint>();
         }
 
         private static IEndpointRouteBuilder MapEndpoint<TEndpoint>(this IEndpointRouteBuilder app)

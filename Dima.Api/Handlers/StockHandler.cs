@@ -2,6 +2,7 @@ using Dima.Core;
 using Dima.Core.Handlers;
 using Dima.Core.Requests.Stocks;
 using Dima.Core.Responses;
+using Dima.Core.Responses.Stocks;
 using stocks.Responses;
 
 namespace Dima.Api.Handlers
@@ -16,9 +17,23 @@ namespace Dima.Api.Handlers
                 var result = await _client.GetFromJsonAsync<StockResponse>($"/api/quote/list?token={Configuration.TokenStockService}");
                 return new Response<StockResponse>(result);
             }
-            catch (Exception e)
+            catch
             {
-                return new Response<StockResponse>(null, 400, e.Data.ToString());
+                return new Response<StockResponse>(null, 400, "Falha ao obter ativos.");
+            }
+        }
+
+        public async Task<Response<StocksBySymbolResponse>> GetStocksBySymbolAsync(GetStockBySymbolRequest request)
+        {
+            try
+            {
+                var result = await _client.GetFromJsonAsync<StocksBySymbolResponse>($"/api/quote/{request.Symbol.ToUpper()}?token={Configuration.TokenStockService}");
+                return new Response<StocksBySymbolResponse>(result);
+            }
+            catch
+            {
+                return new Response<StocksBySymbolResponse>(null, 400, "Falha ao obter ativo.");
+                throw;
             }
         }
     }

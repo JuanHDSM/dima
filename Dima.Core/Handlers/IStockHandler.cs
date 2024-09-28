@@ -1,3 +1,4 @@
+using Dima.Core.Models.Stocks;
 using Dima.Core.Requests.Stocks;
 using Dima.Core.Responses;
 using Dima.Core.Responses.Stocks;
@@ -7,6 +8,7 @@ namespace Dima.Core.Handlers
 {
     public interface IStockHandler
     {
+        Task<Response<Stock>> CreateStockAsync(CreateStockRequest request);
         Task<Response<StockResponse>> GetAllStocksAsync (GetAllStocksRequest request);
         Task<Response<StocksBySymbolResponse>> GetStocksBySymbolAsync(GetStockBySymbolRequest request);
     }

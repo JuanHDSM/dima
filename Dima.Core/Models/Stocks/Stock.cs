@@ -22,5 +22,6 @@ namespace Dima.Core.Models.Stocks
         public decimal? PriceEarnings { get; set; }
         public decimal? EarningsPerShare { get; set; }
         public string LogoUrl { get; set; } = string.Empty;
+        public string? UserId { get; set; } = string.Empty;
     }
 }

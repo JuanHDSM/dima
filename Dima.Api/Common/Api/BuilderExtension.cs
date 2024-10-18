@@ -62,12 +62,12 @@ namespace Dima.Api.Common.Api
                                         Configuration.FrontendUrl,
                                         Configuration.BackendUrl,
                                         Configuration.StockApiUrl,
-                                        "https://dima-api-production.up.railway.app"
+                                        "https://dima-api-production.up.railway.app",
+                                        "http://localhost:5000"
                                     ])
                                     .AllowAnyMethod()
                                     .AllowAnyHeader()
                                     .AllowCredentials()
-                                    .SetIsOriginAllowed(origin => true)
                                     )
             );
         }

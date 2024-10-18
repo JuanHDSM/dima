@@ -1,0 +1,27 @@
+@page "/wallet"
+@inherits WalletPage
+
+<MudText Typo="Typo.h3">Carteira</MudText>
+<div class="d-flex justify-end">
+    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary"
+        Href="/stocks/create">
+        ADICIONAR ATIVO
+    </MudButton>
+</div>
+<MudDataGrid Items="@AssetsInWallet" Class="mt-4">
+    <Columns>
+        <TemplateColumn Title="#">
+            <CellTemplate>
+                <MudImage Src="@context.Item.logoUrl" Height="30" />
+            </CellTemplate>
+        </TemplateColumn>
+        <PropertyColumn Property="x => x.Symbol" Title="Ativo" />
+        <PropertyColumn Property="x => x.Quantity" Title="Quantidade" />
+        <PropertyColumn Property="@(x => x.Average.ToString("C"))" Title="Preço médio" />
+        <PropertyColumn Property="@(x => x.Balance.ToString("C"))" Title="Saldo" >
+            <FooterTemplate>
+                @context.Items.Sum(x => x.Balance).ToString("C")
+            </FooterTemplate>
+        </PropertyColumn>
+    </Columns>
+</MudDataGrid>

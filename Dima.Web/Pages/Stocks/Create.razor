@@ -1,0 +1,44 @@
+@page "/stocks/create"
+@using stocks.Models
+@inherits CreateStockPage
+
+<MudText Typo="Typo.h3">Ativos</MudText>
+
+@if(IsBusy == true)
+{
+    <MudPaper Class="pa-8 mt-4">
+        <MudSkeleton Height="55px" />
+        <MudSkeleton Height="110px" />
+        <MudSkeleton Height="55px" />
+        <MudSkeleton Height="110px" />
+        <MudSkeleton Height="55px" />
+    </MudPaper>
+}
+else
+{ 
+    <MudPaper Class="pa-8 mt-4">
+        <EditForm Model="@InputModel" OnValidSubmit="OnValidSubmitAsync">
+            <DataAnnotationsValidator />
+
+            @* <MudTextField
+        Label="símbolo"
+        HelperText="Digite o símbolo do ativo"
+        @bind-Value="@InputModel.Symbol"
+        For="@(() => InputModel.Symbol)" /> *@
+
+            <MudSelect T="string" Label="Símbolo" AnchorOrigin="Origin.BottomCenter" @bind-Value="InputModel.Symbol">
+
+                @foreach (var stocks in @ExternalStocks)
+                {
+                    <MudSelectItem T="string" Value="stocks.Stock">
+                        @stocks.Stock
+                    </MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4">
+                Salvar
+            </MudButton>
+        </EditForm>
+    </MudPaper>
+}

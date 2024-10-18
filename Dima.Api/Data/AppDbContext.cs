@@ -2,6 +2,7 @@ using System.Reflection;
 using Dima.Api.Models;
 using Dima.Core.Models;
 using Dima.Core.Models.Reports;
+using Dima.Core.Models.Stocks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -27,9 +28,11 @@ namespace Dima.Api.Data
         }
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Transaction> Transactions { get; set; } = null!;
+        public DbSet<Stock> Stocks { get; set; } = null!;
         public DbSet<IncomesAndExpenses> IncomesAndExpenses { get; set; } = null!;
         public DbSet<ExpensesByCategory> ExpensesByCategory { get; set; } = null!;
         public DbSet<IncomesByCategory> IncomesByCategory { get; set; } = null!;
+        public DbSet<AssetsInWallet> AssetsInWallets { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,8 +47,12 @@ namespace Dima.Api.Data
                 .ToView("vwgetincomesbycategory");
 
             builder.Entity<ExpensesByCategory>()
-            .HasNoKey()
-            .ToView("vwgetexpensesbycategory");
+                .HasNoKey()
+                .ToView("vwgetexpensesbycategory");
+
+            builder.Entity<AssetsInWallet>()
+                .HasNoKey()
+                .ToView("vwgetassestinwallet");
         }	
     }
 }

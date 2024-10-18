@@ -12,7 +12,7 @@ namespace Dima.Api.Common.Api
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.MapSwagger().RequireAuthorization();
+            app.MapSwagger();
         }
     }
 }

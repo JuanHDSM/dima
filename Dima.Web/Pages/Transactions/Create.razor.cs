@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;

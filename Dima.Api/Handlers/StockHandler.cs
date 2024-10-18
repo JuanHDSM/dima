@@ -5,6 +5,7 @@ using Dima.Core.Models.Stocks;
 using Dima.Core.Requests.Stocks;
 using Dima.Core.Responses;
 using Dima.Core.Responses.Stocks;
+using Microsoft.EntityFrameworkCore;
 using stocks.Responses;
 
 namespace Dima.Api.Handlers
@@ -64,7 +65,35 @@ namespace Dima.Api.Handlers
 
         }
 
-        public async Task<Response<StockResponse>> GetAllStocksAsync(GetAllStocksRequest request)
+        public async Task<PagedResponse<List<Stock>>> GetAllStocksAsync(GetAllStocksRequest request)
+        {
+            try
+            {
+                var query = context.Stocks
+                    .AsNoTracking()
+                    .Where(x => x.UserId == request.UserId)
+                    .OrderBy(x => x.Id);
+
+                var result = await query
+                    .Skip((request.PageNumber - 1) * request.PageSize)
+                    .Take(request.PageSize)
+                    .ToListAsync();
+
+                var count = await query.CountAsync();
+
+                return new PagedResponse<List<Stock>>(
+                        result, 
+                        count, 
+                        request.PageNumber, 
+                        request.PageSize);
+            }
+            catch
+            {
+                return new PagedResponse<List<Stock>>(null, 500, "Não foi possível consultar os ativos.");
+            }
+        }
+
+        public async Task<Response<StockResponse>> GetAllStocksExternalAsync(GetAllStocksRequest request)
         {
             try
             {
@@ -77,7 +106,25 @@ namespace Dima.Api.Handlers
             }
         }
 
-        public async Task<Response<StocksBySymbolResponse>> GetStocksBySymbolAsync(GetStockBySymbolRequest request)
+        public async Task<Response<List<AssetsInWallet>>> GetAssetsInWalletAsync(GetAssetsInWalletRequest request)
+        {
+            try
+            {
+                var data = await context.AssetsInWallets
+                    .AsNoTracking()
+                    .Where(x => x.UserId == request.UserId)
+                    .OrderBy(x => x.Symbol)
+                    .ToListAsync();
+
+                return new Response<List<AssetsInWallet>>(data);
+            }
+            catch
+            {
+                return new Response<List<AssetsInWallet>>(null, 400, "Falha ao obter ativos da carteira");
+            }
+        }
+
+        public async Task<Response<StocksBySymbolResponse>> GetStocksBySymbolExternalAsync(GetStockBySymbolRequest request)
         {
             try
             {

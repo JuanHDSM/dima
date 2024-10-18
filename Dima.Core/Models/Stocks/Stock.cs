@@ -2,6 +2,7 @@ namespace Dima.Core.Models.Stocks
 {
     public class Stock
     {
+        public long Id { get; set; }
         public string Currency { get; set; } = string.Empty;
         public string ShortName { get; set; } = string.Empty;
         public string LongName { get; set; } = string.Empty;

@@ -4,6 +4,7 @@ using Dima.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dima.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240930125346_ChangePrimaryKey")]
+    partial class ChangePrimaryKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,34 +201,6 @@ namespace Dima.Api.Migrations
                     b.ToTable((string)null);
 
                     b.ToView("vwgetincomesbycategory", (string)null);
-                });
-
-            modelBuilder.Entity("Dima.Core.Models.Stocks.AssetsInWallet", b =>
-                {
-                    b.Property<decimal?>("Average")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Symbol")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("logoUrl")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("vwgetassestinwallet", (string)null);
                 });
 
             modelBuilder.Entity("Dima.Core.Models.Stocks.Stock", b =>

@@ -33,7 +33,7 @@ namespace Dima.Web.Pages.Stocks
             try
             {
                 var request = new GetAllStocksRequest();
-                var result = await Handler.GetAllStocksAsync(request);
+                var result = await Handler.GetAllStocksExternalAsync(request);
                 if(result.IsSuccess)
                 {
                     StocksList =  result.Data?.Stocks ?? [];

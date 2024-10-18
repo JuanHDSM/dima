@@ -10,7 +10,10 @@ namespace Dima.Api.Data.Mappings
         {
             builder.ToTable("stocks");
 
-            builder.HasKey(x => x.Symbol);
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id)
+                .HasColumnName("id");
 
             builder.Property(x => x.Currency)
                 .HasColumnName("currency")
@@ -103,6 +106,9 @@ namespace Dima.Api.Data.Mappings
                 .HasColumnName("userId")
                 .IsRequired()
                 .HasMaxLength(160);
+
+            builder.HasIndex(x => x.Symbol)
+                .HasDatabaseName("IX_stocks_symbol");
         }
     }
 }

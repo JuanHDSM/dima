@@ -46,7 +46,7 @@ namespace Dima.Web.Components.Reports
                 Labels.Add(GetMonthName(item.Month));
             }
 
-            Options.YAxisTicks = 1000;
+            Options.YAxisTicks = 500;
             Options.LineStrokeWidth = 5;
             Options.ChartPalette = ["#76FF01", Colors.Red.Default];
             Series = [

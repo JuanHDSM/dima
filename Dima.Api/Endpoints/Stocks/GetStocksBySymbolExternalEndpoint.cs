@@ -6,7 +6,7 @@ using Dima.Core.Responses.Stocks;
 
 namespace Dima.Api.Endpoints.Stocks
 {
-    public class GetStocksBySymbolEndpoint : IEndpoint
+    public class GetStocksBySymbolExternalEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
         {
@@ -14,7 +14,7 @@ namespace Dima.Api.Endpoints.Stocks
                 .WithName("Stocks: Get Stocks By Symbol")
                 .WithSummary("Obtem ativo por símbolo")
                 .WithDescription("Obtem ativo por símbolo")
-                .WithOrder(1)
+                .WithOrder(2)
                 .Produces<Response<StocksBySymbolResponse>>(); ;
         }
         private static async Task<IResult> HandleAsync(
@@ -26,7 +26,7 @@ namespace Dima.Api.Endpoints.Stocks
             {
                 Symbol = symbol
             };
-            var result = await handler.GetStocksBySymbolAsync(request);
+            var result = await handler.GetStocksBySymbolExternalAsync(request);
             return result.IsSuccess
                 ? TypedResults.Ok(result)
                 : TypedResults.BadRequest(result);

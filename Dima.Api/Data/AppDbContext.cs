@@ -32,6 +32,7 @@ namespace Dima.Api.Data
         public DbSet<IncomesAndExpenses> IncomesAndExpenses { get; set; } = null!;
         public DbSet<ExpensesByCategory> ExpensesByCategory { get; set; } = null!;
         public DbSet<IncomesByCategory> IncomesByCategory { get; set; } = null!;
+        public DbSet<AssetsInWallet> AssetsInWallets { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -46,8 +47,12 @@ namespace Dima.Api.Data
                 .ToView("vwgetincomesbycategory");
 
             builder.Entity<ExpensesByCategory>()
-            .HasNoKey()
-            .ToView("vwgetexpensesbycategory");
+                .HasNoKey()
+                .ToView("vwgetexpensesbycategory");
+
+            builder.Entity<AssetsInWallet>()
+                .HasNoKey()
+                .ToView("vwgetassestinwallet");
         }	
     }
 }

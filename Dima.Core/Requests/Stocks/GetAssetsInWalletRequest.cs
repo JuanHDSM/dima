@@ -1,6 +1,6 @@
 namespace Dima.Core.Requests.Stocks
 {
-    public class GetAllStocksRequest : PagedRequest
+    public class GetAssetsInWalletRequest : BaseRequest
     {
         
     }

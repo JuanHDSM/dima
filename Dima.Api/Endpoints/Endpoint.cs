@@ -13,7 +13,7 @@ namespace Dima.Api.Endpoints
     {
         public static void MapEndpoints(this WebApplication app)
         {
-            var endpoint = app.MapGroup("");
+            var endpoint = app.MapGroup("api");
 
             endpoint.MapGroup("")
                 .WithTags("Health Check")

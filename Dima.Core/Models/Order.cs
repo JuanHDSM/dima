@@ -4,7 +4,7 @@ namespace Dima.Core.Models;
 
 public class Order
 {
-    public long id { get; set; }
+    public long Id { get; set; }
     public string Number { get; set; } = Guid.NewGuid().ToString("N")[..8];
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;

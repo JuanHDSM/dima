@@ -78,6 +78,9 @@ namespace Dima.Api.Common.Api
             builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
             builder.Services.AddTransient<IReportHandler, ReportHandler>();
             builder.Services.AddTransient<IStockHandler, StockHandler>();
+            builder.Services.AddTransient<IOrderHandler, OrderHandler>();
+            builder.Services.AddTransient<IProductHandler, ProductHandler>();
+            builder.Services.AddTransient<IVoucherHandler, VoucherHandler>();
         }
     }
     

@@ -31,7 +31,7 @@ builder.Services.AddHttpClient(Configuration.HttpClientName, options =>
 
 builder.Services.AddTransient<IAccountHandler, AccountHandler>();
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
-builder.Services.AddTransient<ITransactionHandler, TransacionHandler>();
+builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
 builder.Services.AddTransient<IReportHandler, ReportHandler>();
 builder.Services.AddTransient<IStockHandler, StockHandler>();
 

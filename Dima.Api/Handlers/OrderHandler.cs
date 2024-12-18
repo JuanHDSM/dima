@@ -262,7 +262,7 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
     {
         try
         {
-            var orders = await context.Orders.FirstOrDefaultAsync(x => x.UserId == request.UserId && x.Number == request.Number);
+            var orders = await context.Orders.Include(x => x.Voucher).Include(x => x.Product).FirstOrDefaultAsync(x => x.UserId == request.UserId && x.Number == request.Number);
 
             return orders is null 
                 ? new Response<Order?>(null, 404, "Não foi possível obter o pedido") 

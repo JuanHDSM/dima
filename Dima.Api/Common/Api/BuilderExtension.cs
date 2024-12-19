@@ -5,6 +5,7 @@ using Dima.Core;
 using Dima.Core.Handlers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 namespace Dima.Api.Common.Api
 {
@@ -16,7 +17,9 @@ namespace Dima.Api.Common.Api
             Configuration.BackendUrl = Environment.GetEnvironmentVariable("BACKEND_URL")  ?? builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
             Configuration.FrontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL")  ?? builder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
             Configuration.StockApiUrl = builder.Configuration.GetValue<string>("StockApiUrl") ?? Environment.GetEnvironmentVariable("StockApiUrl") ?? string.Empty;
+            ApiConfiguration.StripeApiKey = builder.Configuration.GetValue<string>("StripeApiKey") ?? Environment.GetEnvironmentVariable("StripeApiKey") ?? string.Empty;
             
+            StripeConfiguration.ApiKey = ApiConfiguration.StripeApiKey;
 
         }
 
@@ -76,8 +79,12 @@ namespace Dima.Api.Common.Api
         {
             builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
             builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
-            builder.Services.AddTransient<IReportHandler, ReportHandler>();
             builder.Services.AddTransient<IStockHandler, StockHandler>();
+            builder.Services.AddTransient<IOrderHandler, OrderHandler>();
+            builder.Services.AddTransient<IProductHandler, ProductHandler>();
+            builder.Services.AddTransient<IVoucherHandler, VoucherHandler>();
+            builder.Services.AddTransient<IStripeHandler, StripeHandler>();
+            builder.Services.AddTransient<IReportHandler, ReportHandler>();
         }
     }
     

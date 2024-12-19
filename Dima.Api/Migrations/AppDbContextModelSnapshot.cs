@@ -135,6 +135,113 @@ namespace Dima.Api.Migrations
                     b.ToTable("category", (string)null);
                 });
 
+            modelBuilder.Entity("Dima.Core.Models.Order", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("ExternalReference")
+                        .HasMaxLength(60)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("external_reference");
+
+                    b.Property<short>("Gateway")
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("gateway");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("number");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<short>("Status")
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("status");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(160)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("user_id");
+
+                    b.Property<long?>("VoucherId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExternalReference")
+                        .IsUnique();
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("VoucherId");
+
+                    b.ToTable("order", (string)null);
+                });
+
+            modelBuilder.Entity("Dima.Core.Models.Product", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("description");
+
+                    b.Property<sbyte>("IsActive")
+                        .HasColumnType("TINYINT");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("price");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("slug");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.HasIndex("Title")
+                        .IsUnique();
+
+                    b.ToTable("product", (string)null);
+                });
+
             modelBuilder.Entity("Dima.Core.Models.Reports.ExpensesByCategory", b =>
                 {
                     b.Property<string>("Category")
@@ -202,10 +309,13 @@ namespace Dima.Api.Migrations
 
             modelBuilder.Entity("Dima.Core.Models.Stocks.AssetsInWallet", b =>
                 {
-                    b.Property<decimal?>("Average")
+                    b.Property<decimal>("Average")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("CurrentPrice")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<int>("Quantity")
@@ -392,6 +502,50 @@ namespace Dima.Api.Migrations
                     b.ToTable("transaction", (string)null);
                 });
 
+            modelBuilder.Entity("Dima.Core.Models.Voucher", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("description");
+
+                    b.Property<sbyte>("IsActive")
+                        .HasColumnType("TINYINT")
+                        .HasColumnName("is_active");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("CHAR")
+                        .HasColumnName("number");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.HasIndex("Title")
+                        .IsUnique();
+
+                    b.ToTable("voucher", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
                 {
                     b.Property<long>("Id")
@@ -555,6 +709,23 @@ namespace Dima.Api.Migrations
                         .HasName("id");
 
                     b.ToTable("identity_user_token", (string)null);
+                });
+
+            modelBuilder.Entity("Dima.Core.Models.Order", b =>
+                {
+                    b.HasOne("Dima.Core.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dima.Core.Models.Voucher", "Voucher")
+                        .WithMany()
+                        .HasForeignKey("VoucherId");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Voucher");
                 });
 
             modelBuilder.Entity("Dima.Core.Models.Transaction", b =>

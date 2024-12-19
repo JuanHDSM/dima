@@ -29,6 +29,11 @@ namespace Dima.Api.Data
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Transaction> Transactions { get; set; } = null!;
         public DbSet<Stock> Stocks { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<Voucher> Vouchers { get; set; } = null!;
+
+
         public DbSet<IncomesAndExpenses> IncomesAndExpenses { get; set; } = null!;
         public DbSet<ExpensesByCategory> ExpensesByCategory { get; set; } = null!;
         public DbSet<IncomesByCategory> IncomesByCategory { get; set; } = null!;

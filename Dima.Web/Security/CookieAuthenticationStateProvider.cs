@@ -44,7 +44,7 @@ namespace Dima.Web.Security
         {
             try
             {
-                return await _client.GetFromJsonAsync<User?>("v1/identity/manage/info");
+                return await _client.GetFromJsonAsync<User?>("api/v1/identity/manage/info");
             }
             catch
             {
@@ -69,7 +69,7 @@ namespace Dima.Web.Security
             RoleClaim[]? roles;
             try
             {
-                roles = await _client.GetFromJsonAsync<RoleClaim[]>("v1/identity/roles");
+                roles = await _client.GetFromJsonAsync<RoleClaim[]>("api/v1/identity/roles");
             }
             catch
             {

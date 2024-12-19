@@ -8,7 +8,7 @@ using Dima.Core.Responses;
 
 namespace Dima.Web.Handlers
 {
-    public class TransacionHandler(IHttpClientFactory httpClientFactory) : ITransactionHandler
+    public class TransactionHandler(IHttpClientFactory httpClientFactory) : ITransactionHandler
     {
         private readonly HttpClient _client = httpClientFactory.CreateClient(Configuration.HttpClientName);
         public async Task<Response<Transaction?>> CreateAsync(CreateTransactionRequest request)
@@ -17,20 +17,20 @@ namespace Dima.Web.Handlers
             {
                 request.Amount *= -1;
             }
-            var result = await _client.PostAsJsonAsync("v1/transactions/", request);
+            var result = await _client.PostAsJsonAsync("api/v1/transactions/", request);
             return await result.Content.ReadFromJsonAsync<Response<Transaction?>>()
                 ?? new Response<Transaction?>(null, 400, "Falha ao criar a categoria");
         }
 
         public async Task<Response<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
         {
-            var result = await _client.DeleteAsync($"v1/transactions/{request.Id}");
+            var result = await _client.DeleteAsync($"api/v1/transactions/{request.Id}");
             return await result.Content.ReadFromJsonAsync<Response<Transaction?>>()
                 ?? new Response<Transaction?>(null, 400, "Falha ao atualizar a categoria");
         }
 
         public async Task<Response<Transaction?>> GetByIdAsync(GetTransactionByIdRequest request)
-            => await _client.GetFromJsonAsync<Response<Transaction?>>($"v1/transactions/{request.Id}")
+            => await _client.GetFromJsonAsync<Response<Transaction?>>($"api/v1/transactions/{request.Id}")
                 ?? new Response<Transaction?>(null, 400, "Não foi possível obter a transação");
 
         public async Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetTransactionsByPeriodRequest request)
@@ -45,7 +45,7 @@ namespace Dima.Web.Handlers
                 ? request.EndDate.Value.ToString(format)
                 : DateTime.Now.GetLastDay().ToString(format);
 
-            var url = $"v1/transactions?startDate={startDate}&endDate={endDate}";
+            var url = $"api/v1/transactions?startDate={startDate}&endDate={endDate}";
 
             return await _client.GetFromJsonAsync<PagedResponse<List<Transaction>?>>(url)
                 ?? new PagedResponse<List<Transaction>?>(null, 400, "Não foi possível obter as transações");
@@ -58,7 +58,7 @@ namespace Dima.Web.Handlers
             {
                 request.Amount *= -1;
             }
-            var result = await _client.PutAsJsonAsync($"v1/transactions/{request.Id}", request);
+            var result = await _client.PutAsJsonAsync($"api/v1/transactions/{request.Id}", request);
             return await result.Content.ReadFromJsonAsync<Response<Transaction?>>()
                 ?? new Response<Transaction?>(null, 400, "Falha ao atualizar a categoria");
         }

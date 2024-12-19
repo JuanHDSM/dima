@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <BlazorWebAssemblyLoadGlobalizationData>true</BlazorWebAssemblyLoadGlobalizationData>
     <InvariantGlobalization>false</InvariantGlobalization>
+    <BlazorCacheBootResources>false</BlazorCacheBootResources>
   </PropertyGroup>
 
   <ItemGroup>

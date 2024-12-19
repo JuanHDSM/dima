@@ -3,12 +3,13 @@ using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
+using Dima.Core.Requests.Stripe;
 using Dima.Core.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Handlers;
 
-public class OrderHandler(AppDbContext context) : IOrderHandler
+public class OrderHandler(AppDbContext context, IStripeHandler stripeHandler) : IOrderHandler
 {
     public async Task<Response<Order?>> CancelAsync(CancelOrderRequest request)
     {
@@ -134,7 +135,7 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
         Order? order;
         try
         {
-            order = await context.Orders.Include(x => x.Product).Include(x => x.Voucher).FirstOrDefaultAsync(x => x.UserId == request.UserId && x.Id == request.Id);
+            order = await context.Orders.Include(x => x.Product).Include(x => x.Voucher).FirstOrDefaultAsync(x => x.UserId == request.UserId && x.Number == request.Number);
 
             if (order is null)
             {
@@ -164,6 +165,41 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
                 return new Response<Order?>(order, 400, "Não foi possível realizaar o pagamento deste pedido");
         }
 
+        try
+        {
+            var getTransactionsRequest = new GetTransactionsByOrderNumberRequest
+            {
+                Number = order.Number
+            };
+            var result = await stripeHandler.GetTransactionsByOrderNumberAsync(getTransactionsRequest);
+
+            if (!result.IsSuccess)
+            {
+                return new Response<Order?>(null, 500, "Não foi possível localizar o pagamento");
+            }
+
+            if (result.Data is null)
+            {
+                return new Response<Order?>(null, 500, "Não foi possível localizar o pagamento");
+            }
+
+            if (result.Data.Any(x => x.Refunded))
+            {
+                return new Response<Order?>(null, 500, "Este pedido já teve o pagamento estornado.");
+            }
+            
+            if (!result.Data.Any(x => x.Paid))
+            {
+                return new Response<Order?>(null, 500, "Este pedido não foi pago");
+            }
+            
+            request.ExternalReference = result.Data[0].Id;
+        }
+        catch
+        {
+            return new Response<Order?>(null, 500, "Não foi possível dar baixa no seu pedido");
+        }
+        
         order.Status = EOrderStatus.Paid;
         order.UpdatedAt = DateTime.Now;
         order.ExternalReference = request.ExternalReference;

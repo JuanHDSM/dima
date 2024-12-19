@@ -4,6 +4,7 @@ using Dima.Api.Endpoints.Identity;
 using Dima.Api.Endpoints.Orders;
 using Dima.Api.Endpoints.Reports;
 using Dima.Api.Endpoints.Stocks;
+using Dima.Api.Endpoints.Stripe;
 using Dima.Api.Endpoints.Transactions;
 using Dima.Api.Models;
 using stocks.Endpoints;
@@ -84,6 +85,11 @@ namespace Dima.Api.Endpoints
                 .WithTags("Vouchers")
                 .RequireAuthorization()
                 .MapEndpoint<GetVoucherByNumberEndpoint>();
+
+            endpoint.MapGroup("v1/payments/stripe")
+                .WithTags("Payments - Stripe")
+                .RequireAuthorization()
+                .MapEndpoint<CreateSessionEndpoint>();
         }
 
         private static IEndpointRouteBuilder MapEndpoint<TEndpoint>(this IEndpointRouteBuilder app)

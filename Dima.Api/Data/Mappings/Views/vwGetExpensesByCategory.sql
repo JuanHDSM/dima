@@ -6,21 +6,12 @@ SELECT
     SUM(tran.amount) AS expenses
 FROM
     `transaction` tran
-    INNER JOIN
-    `category ` cat
-    ON 
-        tran.categoryId = cat.id
+    INNER JOIN `category` cat ON tran.categoryId = cat.id
 WHERE
-        tran.paidOrReceivedAt >= DATE_SUB(CURDATE(), INTERVAL
-11 MONTH)
-    AND 
-        tran.paidOrReceivedAt < DATE_ADD
-(CURDATE
-(), INTERVAL 1 MONTH)
-    AND 
-        tran.type = 2
-    GROUP BY
-        tran.userId,
-        cat.title,
-        YEAR
-(tran.paidOrReceivedAt);
+    tran.paidOrReceivedAt >= DATE_SUB(CURDATE(), INTERVAL 11 MONTH)
+  AND tran.paidOrReceivedAt < DATE_ADD(CURDATE(), INTERVAL 1 MONTH)
+  AND tran.type = 2
+GROUP BY
+    tran.userId,
+    cat.title,
+    YEAR(tran.paidOrReceivedAt);

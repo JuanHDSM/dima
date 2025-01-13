@@ -17,12 +17,15 @@ builder.AddServices();
 
 var app = builder.Build();
 
-app.UseStaticFiles();
 app.UseCors(ApiConfiguration.CorsPolicyName);
 app.UseSecurity();
 app.UseDocumentation();
 app.MapEndpoints();
-
+app.UseDefaultFiles()
+    .UseStaticFiles(new StaticFileOptions
+    {
+        ServeUnknownFileTypes = true
+    });
 app.MapFallbackToFile("index.html");
 
 app.Run();

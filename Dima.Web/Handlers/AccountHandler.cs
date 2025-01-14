@@ -21,7 +21,7 @@ namespace Dima.Web.Handlers
         public async Task LogoutAsync()
         {
             var emptyContent = new StringContent("{}", Encoding.UTF8, "application/json");
-            await _client.PostAsJsonAsync("api/v1/identity/logout", emptyContent);
+            await _client.PostAsJsonAsync("api/v1/identity/logout", new { });
         }
 
         public async Task<Response<string>> RegisterAsync(AuthRequest request)

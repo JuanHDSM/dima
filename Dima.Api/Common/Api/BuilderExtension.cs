@@ -16,8 +16,8 @@ namespace Dima.Api.Common.Api
             Configuration.ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
             Configuration.BackendUrl = Environment.GetEnvironmentVariable("BACKEND_URL")  ?? builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
             Configuration.FrontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL")  ?? builder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
-            Configuration.StockApiUrl = builder.Configuration.GetValue<string>("StockApiUrl") ?? Environment.GetEnvironmentVariable("StockApiUrl") ?? string.Empty;
-            ApiConfiguration.StripeApiKey = builder.Configuration.GetValue<string>("StripeApiKey") ?? Environment.GetEnvironmentVariable("StripeApiKey") ?? string.Empty;
+            Configuration.StockApiUrl = Environment.GetEnvironmentVariable("StockApiUrl") ??  builder.Configuration.GetValue<string>("StockApiUrl") ?? string.Empty;
+            ApiConfiguration.StripeApiKey = Environment.GetEnvironmentVariable("StripeApiKey") ??  builder.Configuration.GetValue<string>("StripeApiKey") ?? string.Empty;
             
             StripeConfiguration.ApiKey = ApiConfiguration.StripeApiKey;
 

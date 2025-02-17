@@ -11,7 +11,7 @@ using System.Globalization;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 Configuration.BackendUrl = Environment.GetEnvironmentVariable("BACKEND_URL") ?? builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
-Configuration.StripePublicKey = builder.Configuration.GetValue<string>("StripePublicKey") ?? string.Empty;
+Configuration.StripePublicKey = Environment.GetEnvironmentVariable("StripePublicKey") ?? builder.Configuration.GetValue<string>("StripePublicKey") ?? string.Empty;
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");

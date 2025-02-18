@@ -4,10 +4,16 @@
 
 <MudNavMenu>
     <MudNavLink Href="/">Dashboard</MudNavLink>
-    <MudNavLink Href="/wallet">Carteira</MudNavLink>
-    <MudNavLink Href="/entry/history">Lançamentos</MudNavLink>
+    <MudNavGroup Title="Transações">
+        <MudNavLink Href="/entry/incomes-expenses/history">Receitas e despesas</MudNavLink>
+        <MudNavLink Href="/entry/incomes/history">Receitas</MudNavLink>
+        <MudNavLink Href="/entry/expenses/history">Despeesas</MudNavLink>
+    </MudNavGroup>
+    <MudNavGroup Title="Investimentos">
+        <MudNavLink Href="/wallet">Carteira</MudNavLink>
+        <MudNavLink Href="/stocks">Ativos</MudNavLink>
+    </MudNavGroup>
     <MudNavLink Href="/categories">Categorias</MudNavLink>
-    <MudNavLink Href="/stocks">Ativos</MudNavLink>
     <MudNavLink Href="/premium">Premium</MudNavLink>
     <MudNavLink Href="/logout">Sair</MudNavLink>
 </MudNavMenu>

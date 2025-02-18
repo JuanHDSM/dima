@@ -37,7 +37,9 @@ namespace Dima.Api.Endpoints
                 .MapEndpoint<UpdateTransactionEndpoint>()
                 .MapEndpoint<DeleteTransactionEndpoint>()
                 .MapEndpoint<GetTransactionByIdEndpoint>()
-                .MapEndpoint<GetTransactionByPeriodEndpoint>();
+                .MapEndpoint<GetTransactionByPeriodEndpoint>()
+                .MapEndpoint<GetExpensesByPeriodEndpoint>()
+                .MapEndpoint<GetIncomesByPeriodEndpoint>();
 
             endpoint.MapGroup("v1/identity")
                 .WithTags("Identity")

@@ -13,10 +13,10 @@ namespace Dima.Api.Endpoints.Transactions
     {
         public static void Map(IEndpointRouteBuilder app)
             => app.MapGet("/incomes", HandleAsync)
-                .WithName("Transactions: Get Expenses By Period")
-                .WithSummary("Obtem despesas de um determinado intervalo de datas")
-                .WithDescription("Obtem depesas de um determinado intervalo de datas")
-                .WithOrder(5)
+                .WithName("Transactions: Get Incomes By Period")
+                .WithSummary("Obtem receitas de um determinado intervalo de datas")
+                .WithDescription("Obtem receitas de um determinado intervalo de datas")
+                .WithOrder(7)
                 .Produces<PagedResponse<List<Transaction>?>>();
 
         private static async Task<IResult> HandleAsync(

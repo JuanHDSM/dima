@@ -81,7 +81,7 @@ namespace Dima.Web.Handlers
                 ? request.EndDate.Value.ToString(format)
                 : DateTime.Now.GetLastDay().ToString(format);
             
-            var url = $"api/v1/transactions/incomes/{startDate}&endDate={endDate}";
+            var url = $"api/v1/transactions/incomes?{startDate}&endDate={endDate}";
             
             return await _client.GetFromJsonAsync<PagedResponse<List<Transaction>?>>(url)
                 ?? new PagedResponse<List<Transaction>?>(null, 400, "Não foi possível obter as receitas");

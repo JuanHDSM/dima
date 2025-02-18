@@ -51,6 +51,42 @@ namespace Dima.Web.Handlers
                 ?? new PagedResponse<List<Transaction>?>(null, 400, "Não foi possível obter as transações");
         }
 
+        public async Task<PagedResponse<List<Transaction>?>> GetExpenseByPeriod(GetTransactionsByPeriodRequest request)
+        {
+            const string format = "yyyy-MM-dd";
+
+            var startDate = request.StartDate is not null
+                ? request.StartDate.Value.ToString(format)
+                : DateTime.Now.GetFirstDay().ToString(format);
+
+            var endDate = request.EndDate is not null
+                ? request.EndDate.Value.ToString(format)
+                : DateTime.Now.GetLastDay().ToString(format);
+            
+            var url = $"api/v1/transactions/expenses?startDate={startDate}&endDate={endDate}";
+
+            return await _client.GetFromJsonAsync<PagedResponse<List<Transaction>?>>(url)
+                ?? new PagedResponse<List<Transaction>?>(null, 400, "Não foi possível obter as despesas");
+        }
+
+        public async Task<PagedResponse<List<Transaction>?>> GetIncomesByPeriod(GetTransactionsByPeriodRequest request)
+        {
+            const string format = "yyyy-MM-dd";
+            
+            var startDate = request.StartDate is not null
+                ? request.StartDate.Value.ToString(format)
+                : DateTime.Now.GetFirstDay().ToString(format);
+            
+            var endDate = request.EndDate is not null
+                ? request.EndDate.Value.ToString(format)
+                : DateTime.Now.GetLastDay().ToString(format);
+            
+            var url = $"api/v1/transactions/incomes/{startDate}&endDate={endDate}";
+            
+            return await _client.GetFromJsonAsync<PagedResponse<List<Transaction>?>>(url)
+                ?? new PagedResponse<List<Transaction>?>(null, 400, "Não foi possível obter as receitas");
+        }
+
 
         public async Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
         {

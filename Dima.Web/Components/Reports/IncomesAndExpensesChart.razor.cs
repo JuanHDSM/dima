@@ -1,6 +1,7 @@
 using Dima.Core.Handlers;
 using Dima.Core.Requests.Reports;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Options;
 using MudBlazor;
 
 namespace Dima.Web.Components.Reports
@@ -39,6 +40,9 @@ namespace Dima.Web.Components.Reports
             var incomes = new List<double>();
             var expenses = new List<double>();
 
+            incomes.Add(0.0);
+            expenses.Add(0.0);
+            
             foreach (var item in result.Data)
             {
                 incomes.Add((double)item.Incomes);
@@ -49,6 +53,7 @@ namespace Dima.Web.Components.Reports
             Options.YAxisTicks = 500;
             Options.LineStrokeWidth = 5;
             Options.ChartPalette = ["#76FF01", Colors.Red.Default];
+            
             Series = [
                 new ChartSeries { Name = "Receitas", Data = incomes.ToArray() },
                 new ChartSeries { Name = "Saídas", Data = expenses.ToArray() }

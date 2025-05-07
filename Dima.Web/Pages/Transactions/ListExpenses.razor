@@ -16,18 +16,9 @@
         <PropertyColumn Property="x => x.Title" Title="Lançamento"/>
         <TemplateColumn Title="Tipo">
             <CellTemplate>
-                @if (context.Item.Type == ETransactionType.Deposit)
-                {
-                <MudChip Color="Color.Success" Size="Size.Small" Variant="Variant.Outlined">
-                    entrada
-                </MudChip>
-                }
-                else
-                {
                 <MudChip Color="Color.Error" Size="Size.Small" Variant="Variant.Outlined">
                     saída
                 </MudChip>
-                }
             </CellTemplate>
         </TemplateColumn>
         <PropertyColumn Property="@(x => x.Amount.ToString("C"))" Title="Valor" Sortable="true">

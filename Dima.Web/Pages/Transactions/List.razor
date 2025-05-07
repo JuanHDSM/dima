@@ -55,7 +55,7 @@
                 }
             </CellTemplate>
         </TemplateColumn>
-        <PropertyColumn Property="@(x => x.Amount.ToString("C"))" Title="Valor" Sortable="true">
+        <PropertyColumn Property="@(x => (x.Amount).ToString("C"))" Title="Valor" Sortable="true">
             <FooterTemplate>
                 @context.Items.Sum(x => x.Amount).ToString("C")
             </FooterTemplate>

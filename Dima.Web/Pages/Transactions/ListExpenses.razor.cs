@@ -5,84 +5,74 @@ using Dima.Core.Requests.Transactions;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace Dima.Web.Pages.Transactions;
-
-public partial class ListExpensesPage : ComponentBase
+namespace Dima.Web.Pages.Transactions
 {
-    #region  Properties
 
-    public bool IsBusy { get; set; } = false;
-    
-    public string SearchTerm { get; set; } = string.Empty;
-    
-    public List<Transaction> Transactions { get; set; } = new();
-    
-    public int CurrentMonth { get; set; } = DateTime.Now.Month;
-    
-    public int CurrentYear { get; set; } = DateTime.Now.Year;
-
-    public int[] Years { get; set; } =
+    public partial class ListExpensesPage : ComponentBase
     {
-        DateTime.Now.Year,
-        DateTime.Now.AddYears(-1).Year,
-        DateTime.Now.AddYears(-2).Year,
-        DateTime.Now.AddYears(-3).Year,
-        DateTime.Now.AddYears(-4).Year,
-    };
+        #region Properties
 
-    #endregion
+        public bool IsBusy { get; set; } = false;
 
-    #region Services
+        public string SearchTerm { get; set; } = string.Empty;
 
-    public ISnackbar Snackbar { get; set; } = null!;
-    
-    public ITransactionHandler Handler { get; set; } = null!;
+        public List<Transaction> Transactions { get; set; } = new();
 
-    public IDialogService DialogService { get; set; } = null!;
+        public int CurrentMonth { get; set; } = DateTime.Now.Month;
 
-    #endregion
+        public int CurrentYear { get; set; } = DateTime.Now.Year;
 
-    #region Overrides
+        #endregion
 
-    protected override async void OnInitialized()
-        => await GetExpensesAsync();
+        #region Services
 
-    #endregion
+        [Inject]
+        public ISnackbar Snackbar { get; set; } = null!;
 
-    #region Methods
+        [Inject]
+        public ITransactionHandler Handler { get; set; } = null!;
 
-    
+        [Inject]
+        public IDialogService DialogService { get; set; } = null!;
 
-    #endregion
+        #endregion
 
-    #region Private Methods
+        #region Overrides
 
-    private async Task GetExpensesAsync()
-    {
-        IsBusy = true;
-        try
+        protected override async Task OnInitializedAsync()
+            => await GetExpensesAsync();
+
+        #endregion
+
+        #region Private Methods
+
+        private async Task GetExpensesAsync()
         {
-            var request = new GetTransactionsByPeriodRequest
+            IsBusy = true;
+            try
             {
-                StartDate = DateTime.Now.GetFirstDay(CurrentYear, CurrentMonth),
-                EndDate = DateTime.Now.GetLastDay(CurrentYear, CurrentMonth),
-                PageNumber = 1,
-                PageSize = 1000
-            };
+                var request = new GetTransactionsByPeriodRequest
+                {
+                    StartDate = DateTime.Now.GetFirstDay(CurrentYear, CurrentMonth),
+                    EndDate = DateTime.Now.GetLastDay(CurrentYear, CurrentMonth),
+                    PageNumber = 1,
+                    PageSize = 1000
+                };
 
-            var result = await Handler.GetExpenseByPeriod(request);
-            if (result.IsSuccess)
-                Transactions = result.Data ?? [];
+                var result = await Handler.GetExpenseByPeriod(request);
+                if (result.IsSuccess)
+                    Transactions = result.Data ?? [];
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add(ex.Message, Severity.Error);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
-        catch (Exception ex)
-        {
-            Snackbar.Add(ex.Message, Severity.Error);
-        }
-        finally
-        {
-            IsBusy = false;
-        }
+
+        #endregion
     }
-
-    #endregion
 }

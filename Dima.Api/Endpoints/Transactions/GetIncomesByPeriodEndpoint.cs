@@ -12,7 +12,7 @@ namespace Dima.Api.Endpoints.Transactions
     public class GetIncomesByPeriodEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
-            => app.MapGet("/incomes", HandleAsync)
+            => app.MapGet("/", HandleAsync)
                 .WithName("Transactions: Get Incomes By Period")
                 .WithSummary("Obtem receitas de um determinado intervalo de datas")
                 .WithDescription("Obtem receitas de um determinado intervalo de datas")

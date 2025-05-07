@@ -12,7 +12,7 @@ namespace Dima.Api.Endpoints.Transactions
     public class GetExpensesByPeriodEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
-            => app.MapGet("/expenses/list", HandleAsync)
+            => app.MapGet("/", HandleAsync)
                 .WithName("Transactions: Get Expenses By Period")
                 .WithSummary("Obtem despesas de um determinado intervalo de datas")
                 .WithDescription("Obtem depesas de um determinado intervalo de datas")

@@ -1,6 +1,7 @@
 using System.IO.Compression;
 using Dima.Api.Data;
 using Dima.Core.Common.Extensions;
+using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
@@ -102,8 +103,8 @@ namespace Dima.Api.Handlers
                     .AsNoTracking()
                     .Where(x 
                         => x.PaidOrReceivedAt >= request.StartDate 
-                        && x.PaidOrReceivedAt <= request.EndDate 
-                        && x.UserId == request.UserId)
+                           && x.PaidOrReceivedAt <= request.EndDate 
+                           && x.UserId == request.UserId)
                     .Include(x => x.Category)
                     .OrderBy(x => x.PaidOrReceivedAt);
 
@@ -126,6 +127,93 @@ namespace Dima.Api.Handlers
             }
         }
 
+        public async Task<PagedResponse<List<Transaction>?>> GetExpenseByPeriod(GetTransactionsByPeriodRequest request)
+        {
+            try
+            {
+                request.StartDate ??= DateTime.Now.GetFirstDay();
+                request.EndDate ??= DateTime.Now.GetLastDay();
+            }
+            catch
+            {
+                return new PagedResponse<List<Transaction>?>(null, 500, "Não foi possível obter a data de início ou de termino");
+            }
+
+            try
+            {
+                var query = context.Transactions
+                    .AsTracking()
+                    .Where(x 
+                        => x.PaidOrReceivedAt >= request.StartDate 
+                           && x.PaidOrReceivedAt <= request.EndDate 
+                           && x.Type == ETransactionType.Withdraw 
+                           && x.UserId == request.UserId)
+                    .Include(x => x.Category)
+                    .OrderBy(x => x.PaidOrReceivedAt);
+
+                var expensesTransaction =
+                    await query
+                        .Skip((request.PageNumber - 1) * request.PageSize)
+                        .Take(request.PageSize)
+                        .ToListAsync();
+                
+                var count = await query.CountAsync();
+
+                return new PagedResponse<List<Transaction>?>(
+                    expensesTransaction,
+                    count,
+                    request.PageNumber,
+                    request.PageSize);
+            }
+            catch
+            {
+                return new PagedResponse<List<Transaction>?>(null, 500, "Não foi possível consultar as transações");
+            }
+        }
+
+        public async Task<PagedResponse<List<Transaction>?>> GetIncomesByPeriod(GetTransactionsByPeriodRequest request)
+        {
+            try
+            {
+                request.StartDate ??= DateTime.Now.GetFirstDay();
+                request.EndDate ??= DateTime.Now.GetLastDay();
+            }
+            catch
+            {
+                return new PagedResponse<List<Transaction>?>(null, 500, "Não foi possível obter a data de início ou de termino");
+            }
+
+            try
+            {
+                var query = context.Transactions
+                    .AsNoTracking()
+                    .Where(x 
+                        => x.PaidOrReceivedAt >= request.StartDate
+                        && x.PaidOrReceivedAt <= request.EndDate
+                        && x.Type == ETransactionType.Deposit
+                        && x.UserId == request.UserId)
+                    .Include(x => x.Category)
+                    .OrderBy(x => x.PaidOrReceivedAt);
+
+                var incomesTransactions = await query
+                    .Skip((request.PageNumber - 1) * request.PageSize)
+                    .Take(request.PageSize)
+                    .ToListAsync();
+                
+                var count = await query.CountAsync();
+
+                return new PagedResponse<List<Transaction>?>(
+                    incomesTransactions,
+                    count,
+                    request.PageNumber,
+                    request.PageSize);
+            }
+            catch 
+            {
+                return new PagedResponse<List<Transaction>?>(null, 500, "Não foi possível consultar as transações");
+            }
+        }
+
         public async Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
         {
             try
@@ -133,7 +221,7 @@ namespace Dima.Api.Handlers
                 var transaction = await context.Transactions
                     .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId
-                );
+                    );
 
                 if (transaction is null)
                     return new Response<Transaction?>(null, 404, "Transação não encontrada");

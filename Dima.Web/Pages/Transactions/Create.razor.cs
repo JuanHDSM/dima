@@ -1,3 +1,4 @@
+using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
@@ -73,7 +74,14 @@ namespace Dima.Web.Pages.Transactions
                 if (result.IsSuccess)
                 {
                     Snackbar.Add(result.Message!, Severity.Success);
-                    NavigationManager.NavigateTo("/entry/history");
+                    if (InputModel.Type == ETransactionType.Withdraw)
+                    {
+                        NavigationManager.NavigateTo("/entry/expenses/history");
+                    }
+                    else
+                    {
+                        NavigationManager.NavigateTo("/entry/incomes/history");
+                    }
                 }
                 else
                 {

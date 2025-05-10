@@ -1,0 +1,40 @@
+@page "/entry/expenses/history"
+@inherits ListExpensesPage
+
+<MudText Typo="Typo.h3">Despesas</MudText>
+
+<MudDataGrid Items="@Transactions" Class="mt-8" Filterable="true" Hideable="true" ColumnResizeMode="ResizeMode.Column">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Despesas</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="SearchTerm" Placeholder="Filtrar" Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search" Immediate="true" IconSize="Size.Medium" Class="m t-0">
+        </MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="x => x.Id" Title="#"/>
+        <PropertyColumn Property="x => x.Title" Title="Lançamento"/>
+        <TemplateColumn Title="Tipo">
+            <CellTemplate>
+                <MudChip Color="Color.Error" Size="Size.Small" Variant="Variant.Outlined">
+                    saída
+                </MudChip>
+            </CellTemplate>
+        </TemplateColumn>
+        <PropertyColumn Property="@(x => x.Amount.ToString("C"))" Title="Valor" Sortable="true">
+            <FooterTemplate>
+                @context.Items.Sum(x => x.Amount).ToString("C")
+            </FooterTemplate>
+        </PropertyColumn>
+        <PropertyColumn Property="x => x.Category.Title" Title="Categoria"/>
+        <TemplateColumn Title="Ações">
+            <CellTemplate>
+                <MudStack Row>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Href="@($"/entry/edit/{context.Item.Id}")"></MudIconButton>
+                   <!-- <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
+                                   OnClick="(() => OnDeleteButtonClickedAsync(context.Item.Id, context.Item.Title))"></MudIconButton> -->
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+</MudDataGrid>

@@ -60,7 +60,7 @@ namespace Dima.Web.Pages.Transactions
                 if (result.IsSuccess)
                 {
                     Snackbar.Add(result.Message!, Severity.Success);
-                    NavigationManager.NavigateTo("/entry/history");
+                    NavigationManager.NavigateTo("/entry/incomes-expenses/history");
                 }
             }
             catch (Exception ex)

@@ -4,16 +4,19 @@ using Finux.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Finux.Api.Migrations
+namespace Dima.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250511003832_AddRecurring")]
+    partial class AddRecurring
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace Finux.Api.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("Finux.Api.Models.User", b =>
+            modelBuilder.Entity("Dima.Api.Models.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,7 +107,7 @@ namespace Finux.Api.Migrations
                     b.ToTable("identity_user", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Category", b =>
+            modelBuilder.Entity("Dima.Core.Models.Category", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -135,7 +138,7 @@ namespace Finux.Api.Migrations
                     b.ToTable("category", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Order", b =>
+            modelBuilder.Entity("Dima.Core.Models.Order", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -198,7 +201,7 @@ namespace Finux.Api.Migrations
                     b.ToTable("order", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Product", b =>
+            modelBuilder.Entity("Dima.Core.Models.Product", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -242,7 +245,7 @@ namespace Finux.Api.Migrations
                     b.ToTable("product", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Reports.ExpensesByCategory", b =>
+            modelBuilder.Entity("Dima.Core.Models.Reports.ExpensesByCategory", b =>
                 {
                     b.Property<string>("Category")
                         .IsRequired()
@@ -263,7 +266,7 @@ namespace Finux.Api.Migrations
                     b.ToView("vwgetexpensesbycategory", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Reports.IncomesAndExpenses", b =>
+            modelBuilder.Entity("Dima.Core.Models.Reports.IncomesAndExpenses", b =>
                 {
                     b.Property<decimal>("Expenses")
                         .HasColumnType("decimal(65,30)");
@@ -286,7 +289,7 @@ namespace Finux.Api.Migrations
                     b.ToView("vwgetincomesandexpenses", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Reports.IncomesByCategory", b =>
+            modelBuilder.Entity("Dima.Core.Models.Reports.IncomesByCategory", b =>
                 {
                     b.Property<string>("Category")
                         .IsRequired()
@@ -307,7 +310,7 @@ namespace Finux.Api.Migrations
                     b.ToView("vwgetincomesbycategory", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Stocks.AssetsInWallet", b =>
+            modelBuilder.Entity("Dima.Core.Models.Stocks.AssetsInWallet", b =>
                 {
                     b.Property<decimal>("Average")
                         .HasColumnType("decimal(65,30)");
@@ -338,7 +341,7 @@ namespace Finux.Api.Migrations
                     b.ToView("vwgetassestinwallet", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Stocks.Stock", b =>
+            modelBuilder.Entity("Dima.Core.Models.Stocks.Stock", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -454,7 +457,7 @@ namespace Finux.Api.Migrations
                     b.ToTable("stocks", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Transaction", b =>
+            modelBuilder.Entity("Dima.Core.Models.Transaction", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -510,7 +513,7 @@ namespace Finux.Api.Migrations
                     b.ToTable("transaction", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Voucher", b =>
+            modelBuilder.Entity("Dima.Core.Models.Voucher", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -719,15 +722,15 @@ namespace Finux.Api.Migrations
                     b.ToTable("identity_user_token", (string)null);
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Order", b =>
+            modelBuilder.Entity("Dima.Core.Models.Order", b =>
                 {
-                    b.HasOne("Finux.Core.Models.Product", "Product")
+                    b.HasOne("Dima.Core.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Finux.Core.Models.Voucher", "Voucher")
+                    b.HasOne("Dima.Core.Models.Voucher", "Voucher")
                         .WithMany()
                         .HasForeignKey("VoucherId");
 
@@ -736,9 +739,9 @@ namespace Finux.Api.Migrations
                     b.Navigation("Voucher");
                 });
 
-            modelBuilder.Entity("Finux.Core.Models.Transaction", b =>
+            modelBuilder.Entity("Dima.Core.Models.Transaction", b =>
                 {
-                    b.HasOne("Finux.Core.Models.Category", "Category")
+                    b.HasOne("Dima.Core.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -749,14 +752,14 @@ namespace Finux.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
                 {
-                    b.HasOne("Finux.Api.Models.User", null)
+                    b.HasOne("Dima.Api.Models.User", null)
                         .WithMany("Roles")
                         .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
-                    b.HasOne("Finux.Api.Models.User", null)
+                    b.HasOne("Dima.Api.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -765,7 +768,7 @@ namespace Finux.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
-                    b.HasOne("Finux.Api.Models.User", null)
+                    b.HasOne("Dima.Api.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -774,7 +777,7 @@ namespace Finux.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
-                    b.HasOne("Finux.Api.Models.User", null)
+                    b.HasOne("Dima.Api.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -783,14 +786,14 @@ namespace Finux.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
-                    b.HasOne("Finux.Api.Models.User", null)
+                    b.HasOne("Dima.Api.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Finux.Api.Models.User", b =>
+            modelBuilder.Entity("Dima.Api.Models.User", b =>
                 {
                     b.Navigation("Roles");
                 });

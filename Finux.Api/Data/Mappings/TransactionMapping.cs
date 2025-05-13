@@ -50,6 +50,14 @@ namespace Finux.Api.Data.Mappings
 
             builder.Property(x => x.CategoryId)
                 .HasColumnName("categoryId");
+
+            builder.Property(x => x.IsRecurring)
+                .HasColumnName("isRecurring")
+                .HasColumnType("TINYINT");
+            
+            builder.Property(x => x.RecurringType)
+                .HasColumnName("recurringType")
+                .HasColumnType("TINYINT");
         }
     }
 }

@@ -15,5 +15,7 @@ namespace Finux.Core.Requests.Transactions
         public long CategoryId { get; set; }
         [Required(ErrorMessage = "Data inválida")]
         public DateTime? PaidOrReceivedAt { get; set; }
+        public bool IsRecurring { get; set; } = false;
+        public ERecurringType? RecurringType { get; set; } = ERecurringType.Monthly;
     }
 }

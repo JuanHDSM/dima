@@ -23,14 +23,85 @@ namespace Finux.Api.Handlers
                     CreateAt = DateTime.Now,
                     Amount = request.Amount,
                     PaidOrReceivedAt = request.PaidOrReceivedAt,
+                    IsRecurring = request.IsRecurring,
+                    RecurringType = request.RecurringType ?? null,
                     Title = request.Title,
                     Type = request.Type
                 };
+                
+                if (!request.IsRecurring)
+                {                
+                    await context.Transactions.AddAsync(transaction);
+                    await context.SaveChangesAsync();
+                    return new Response<Transaction?>(transaction, 201, "Transação criada com sucesso");
+                }
+                
+                const int times = 24;
+                switch (request.RecurringType)
+                {
+                    case ERecurringType.Weekly :
+                        for (var i = 0; i < times * 2; i++)
+                        {
+                            var newTransaction = new Transaction
+                            {
+                                Amount = transaction.Amount,
+                                CategoryId = transaction.CategoryId,
+                                CreateAt = DateTime.Now,   
+                                IsRecurring = transaction.IsRecurring,
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddDays(i * 7),
+                                RecurringType = transaction.RecurringType,
+                                Title = transaction.Title,
+                                Type = transaction.Type,
+                                UserId = transaction.UserId
+                            }; 
+                            await context.Transactions.AddAsync(newTransaction);
+                            await context.SaveChangesAsync();
+                        }
+                        break;
+                    case ERecurringType.Monthly:
+                        for (var i = 0; i < times; i++)
+                        {
+                                var newTransaction = new Transaction
+                                {
+                                    Amount = transaction.Amount,
+                                    CategoryId = transaction.CategoryId,
+                                    CreateAt = DateTime.Now,   
+                                    IsRecurring = transaction.IsRecurring,
+                                    PaidOrReceivedAt = transaction.PaidOrReceivedAt?.AddMonths(i),
+                                    RecurringType = transaction.RecurringType,
+                                    Title = transaction.Title,
+                                    Type = transaction.Type,
+                                    UserId = transaction.UserId
+                                };   
+                                await context.Transactions.AddAsync(newTransaction);
+                                await context.SaveChangesAsync();
+                            
+                        }
+                        break;
+                    case ERecurringType.Yearly:
+                        for (var i = 0; i < times/2 ; i++)
+                        {
+                            transaction.CreateAt = DateTime.Now.AddYears(i);
+                            var newTransaction = new Transaction
+                            {
+                                Amount = transaction.Amount,
+                                CategoryId = transaction.CategoryId,
+                                CreateAt = DateTime.Now,   
+                                IsRecurring = transaction.IsRecurring,
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt?.AddYears(1),
+                                RecurringType = transaction.RecurringType,
+                                Title = transaction.Title,
+                                Type = transaction.Type,
+                                UserId = transaction.UserId
+                            }; 
+                            await context.Transactions.AddAsync(newTransaction);
+                            await context.SaveChangesAsync();
+                        }
+                        break;
+                    
+                }
 
-                await context.Transactions.AddAsync(transaction);
-                await context.SaveChangesAsync();
-
-                return new Response<Transaction?>(transaction, 201, "Transação criada com sucesso");
+                return new Response<Transaction?>(transaction, 201, "Transações criadas com sucesso");
             }
             catch
             {

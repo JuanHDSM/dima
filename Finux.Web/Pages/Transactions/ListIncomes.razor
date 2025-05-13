@@ -27,11 +27,21 @@
             </FooterTemplate>
         </PropertyColumn>
         <PropertyColumn Property="x => x.Category.Title" Title="Categoria"/>
+        <TemplateColumn Title="Pago/Recebido">
+            <CellTemplate>
+                @context.Item.PaidOrReceivedAt?.ToString("dd/MM/yyyy")
+            </CellTemplate>
+        </TemplateColumn>
+        <TemplateColumn Title="Criado">
+            <CellTemplate>
+                @context.Item.CreateAt.ToString("dd/MM/yyyy")
+            </CellTemplate>
+        </TemplateColumn>
         <TemplateColumn Title="Ações">
             <CellTemplate>
                 <MudStack Row>
                     <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Href="@($"/entry/edit/{context.Item.Id}")"></MudIconButton>
-                   <!-- <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
+                    <!-- <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
                                    OnClick="(() => OnDeleteButtonClickedAsync(context.Item.Id, context.Item.Title))"></MudIconButton> -->
                 </MudStack>
             </CellTemplate>

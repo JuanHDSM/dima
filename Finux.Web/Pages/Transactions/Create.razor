@@ -44,6 +44,7 @@
         <MudSelect 
             T="long" 
             Label="Categoria" 
+            Class="py-4"
             AnchorOrigin="Origin.BottomCenter"
             @bind-Value="InputModel.CategoryId">
 
@@ -54,6 +55,33 @@
                 </MudSelectItem>
             }
         </MudSelect>
+        
+        <MudText>Recorrência</MudText>
+        <MudSwitch Label="Recorrência" @bind-Value="InputModel.IsRecurring" Color="Color.Primary" />
+        
+        @if (!InputModel.IsRecurring)
+        {
+            
+        }
+        else
+        {
+            <MudSelect
+                T="ERecurringType"
+                Label="Recorrência"
+                AnchorOrigin="Origin.BottomCenter"
+            >
+                <MudSelectItem T="ERecurringType" Value="ERecurringType.Weekly">
+                    Semanalmente
+                </MudSelectItem>
+                <MudSelectItem T="ERecurringType" Value="ERecurringType.Monthly">
+                    Mensalmente
+                </MudSelectItem>
+                <MudSelectItem T="ERecurringType" Value="ERecurringType.Yearly">
+                    Anualmente
+                </MudSelectItem>
+            </MudSelect>
+        }
+
         <MudButton 
             ButtonType="ButtonType.Submit" 
             Variant="Variant.Filled" 

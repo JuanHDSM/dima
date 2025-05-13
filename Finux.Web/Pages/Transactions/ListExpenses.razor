@@ -27,6 +27,16 @@
             </FooterTemplate>
         </PropertyColumn>
         <PropertyColumn Property="x => x.Category.Title" Title="Categoria"/>
+        <TemplateColumn Title="Pago/Recebido">
+            <CellTemplate>
+                @context.Item.PaidOrReceivedAt?.ToString("dd/MM/yyyy")
+            </CellTemplate>
+        </TemplateColumn>
+        <TemplateColumn Title="Criado">
+            <CellTemplate>
+                @context.Item.CreateAt.ToString("dd/MM/yyyy")
+            </CellTemplate>
+        </TemplateColumn>
         <TemplateColumn Title="Ações">
             <CellTemplate>
                 <MudStack Row>

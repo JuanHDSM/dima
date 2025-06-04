@@ -1,4 +1,6 @@
+using System.Runtime.InteropServices.JavaScript;
 using Dima.Api.Data;
+using Dima.Core.Common.Extensions;
 using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models.Reports;
@@ -33,7 +35,8 @@ namespace Dima.Api.Handlers
 
         public async Task<Response<FinancialSummary?>> GetFinancialSummaryReportAsync(GetFinancialSummaryRequest request)
         {
-            var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var startDate = DateTime.Now.GetFirstDay();
+            var endDate =  DateTime.Now.GetLastDay();
             try
             {
                 var data = await context.Transactions
@@ -41,7 +44,7 @@ namespace Dima.Api.Handlers
                 .Where(x =>
                     x.UserId == request.UserId &&
                     x.PaidOrReceivedAt >= startDate &&
-                    x.PaidOrReceivedAt <= DateTime.Now)
+                    x.PaidOrReceivedAt <= endDate)
                 .GroupBy(x => 1)
                 .Select(x =>
                     new FinancialSummary(

@@ -39,6 +39,14 @@ namespace Dima.Api.Endpoints
                 .MapEndpoint<GetTransactionByIdEndpoint>()
                 .MapEndpoint<GetTransactionByPeriodEndpoint>();
 
+            endpoint.MapGroup("v1/expenses")
+                .WithTags("Expenses")
+                .MapEndpoint<GetExpensesByPeriodEndpoint>();
+            
+            endpoint.MapGroup("v1/incomes")
+                .WithTags("Expenses")
+                .MapEndpoint<GetIncomesByPeriodEndpoint>();
+
             endpoint.MapGroup("v1/identity")
                 .WithTags("Identity")
                 .MapIdentityApi<User>();

@@ -19,6 +19,9 @@ namespace Finux.Api.Common.Api
             Configuration.StockApiUrl = Environment.GetEnvironmentVariable("StockApiUrl") ??  builder.Configuration.GetValue<string>("StockApiUrl") ?? string.Empty;
             ApiConfiguration.StripeApiKey = Environment.GetEnvironmentVariable("StripeApiKey") ??  builder.Configuration.GetValue<string>("StripeApiKey") ?? string.Empty;
             
+            Console.WriteLine($"FrontendUrl ==> {Configuration.FrontendUrl}");
+            Console.WriteLine($"BackendUrl ==> {Configuration.BackendUrl}");
+            
             StripeConfiguration.ApiKey = ApiConfiguration.StripeApiKey;
 
         }
@@ -65,8 +68,6 @@ namespace Finux.Api.Common.Api
                                         Configuration.FrontendUrl,
                                         Configuration.BackendUrl,
                                         Configuration.StockApiUrl,
-                                        "https://-production.up.railway.app",
-                                        "http://localhost:5000"
                                     ])
                                     .AllowAnyMethod()
                                     .AllowAnyHeader()

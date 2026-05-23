@@ -1,0 +1,53 @@
+﻿services:
+
+  api:
+    container_name: finux-api
+    build:
+      context: .
+      dockerfile: Finux.Api/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ConnectionStrings__DefaultConnection: "server=mysql;port=3306;user=root;password=root123;database=finux_dev"
+      BackendUrl: "http://localhost:8080"
+      FrontendUrl: "http://localhost"
+      StripeApiKey: ""
+    depends_on:
+      - mysql
+    networks:
+      - finux-network
+
+  web:
+    container_name: finux-web
+    build:
+      context: .
+      dockerfile: Finux.Web/Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "80:80"
+    networks:
+      - finux-network
+
+  mysql:
+    image: mysql:8.4
+    container_name: finux-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: finux_dev
+      MYSQL_USER: finux_dev
+      MYSQL_PASSWORD: finux123
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - finux-network
+
+networks:
+  finux-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

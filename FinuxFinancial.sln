@@ -9,6 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finux.Api", "Finux.Api\Finu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finux.Web", "Finux.Web\Finux.Web.csproj", "{AEE94090-4118-4D33-992D-5628955DD772}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finux.Api.Tests", "Finux.Api.Tests\Finux.Api.Tests.csproj", "{5EFE6D48-4ED7-4373-B4D2-5398FA13A2DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{30F1961A-2444-4BF9-B009-9E54D2945790}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +37,9 @@ Global
 		{AEE94090-4118-4D33-992D-5628955DD772}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEE94090-4118-4D33-992D-5628955DD772}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEE94090-4118-4D33-992D-5628955DD772}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EFE6D48-4ED7-4373-B4D2-5398FA13A2DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EFE6D48-4ED7-4373-B4D2-5398FA13A2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EFE6D48-4ED7-4373-B4D2-5398FA13A2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EFE6D48-4ED7-4373-B4D2-5398FA13A2DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

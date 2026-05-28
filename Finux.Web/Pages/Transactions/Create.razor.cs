@@ -15,9 +15,11 @@ namespace Finux.Web.Pages.Transactions
         #region Properties
 
         public bool IsBusy { get; set; } = false;
+        public bool IsRecurring { get; set; } = false;
 
         public CreateTransactionRequest InputModel { get; set; } = new();
 
+        public string _value1 { get; set; } = string.Empty;
         public List<Category> Categories { get; set; } = [];
 
         #endregion
@@ -70,6 +72,10 @@ namespace Finux.Web.Pages.Transactions
             IsBusy = true;
             try
             {
+                if (_value1 == "total_values")
+                {
+                    InputModel.Amount /= InputModel.Installments;
+                }
                 var result = await Handler.CreateAsync(InputModel);
                 if (result.IsSuccess)
                 {

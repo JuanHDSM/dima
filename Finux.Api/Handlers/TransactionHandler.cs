@@ -1,6 +1,5 @@
-using System.IO.Compression;
-using Finux.Core.Common.Extensions;
 using Finux.Api.Data;
+using Finux.Core.Common.Extensions;
 using Finux.Core.Enums;
 using Finux.Core.Handlers;
 using Finux.Core.Models;
@@ -23,83 +22,47 @@ namespace Finux.Api.Handlers
                     CreateAt = DateTime.Now,
                     Amount = request.Amount,
                     PaidOrReceivedAt = request.PaidOrReceivedAt,
-                    IsRecurring = request.IsRecurring,
                     RecurringType = request.RecurringType ?? null,
+                    InstallmentsType = request.InstallmentsType,
+                    Installments = request.Installments,
                     Title = request.Title,
-                    Type = request.Type
+                    Type = request.Type,
                 };
                 
-                if (!request.IsRecurring)
-                {                
+                if (request.RecurringType is null)
+                {
                     await context.Transactions.AddAsync(transaction);
                     await context.SaveChangesAsync();
                     return new Response<Transaction?>(transaction, 201, "Transação criada com sucesso");
                 }
                 
-                const int times = 24;
-                switch (request.RecurringType)
+                const int fixedMonthlyTimes = 1200;
+                
+                if (request.RecurringType == ERecurringType.MonthlyFixed)
                 {
-                    case ERecurringType.Weekly :
-                        for (var i = 0; i < times * 2; i++)
+                        for (var i = 0; i < fixedMonthlyTimes; i++)
                         {
-                            var newTransaction = new Transaction
+                            var recurringTransaction = new Transaction
                             {
                                 Amount = transaction.Amount,
                                 CategoryId = transaction.CategoryId,
                                 CreateAt = DateTime.Now,   
-                                IsRecurring = transaction.IsRecurring,
-                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddDays(i * 7),
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddMonths(i),
                                 RecurringType = transaction.RecurringType,
                                 Title = transaction.Title,
                                 Type = transaction.Type,
                                 UserId = transaction.UserId
                             }; 
-                            await context.Transactions.AddAsync(newTransaction);
+                            await context.Transactions.AddAsync(recurringTransaction);
                             await context.SaveChangesAsync();
+
                         }
-                        break;
-                    case ERecurringType.Monthly:
-                        for (var i = 0; i < times; i++)
-                        {
-                                var newTransaction = new Transaction
-                                {
-                                    Amount = transaction.Amount,
-                                    CategoryId = transaction.CategoryId,
-                                    CreateAt = DateTime.Now,   
-                                    IsRecurring = transaction.IsRecurring,
-                                    PaidOrReceivedAt = transaction.PaidOrReceivedAt?.AddMonths(i),
-                                    RecurringType = transaction.RecurringType,
-                                    Title = transaction.Title,
-                                    Type = transaction.Type,
-                                    UserId = transaction.UserId
-                                };   
-                                await context.Transactions.AddAsync(newTransaction);
-                                await context.SaveChangesAsync();
-                            
-                        }
-                        break;
-                    case ERecurringType.Yearly:
-                        for (var i = 0; i < times/2 ; i++)
-                        {
-                            transaction.CreateAt = DateTime.Now.AddYears(i);
-                            var newTransaction = new Transaction
-                            {
-                                Amount = transaction.Amount,
-                                CategoryId = transaction.CategoryId,
-                                CreateAt = DateTime.Now,   
-                                IsRecurring = transaction.IsRecurring,
-                                PaidOrReceivedAt = transaction.PaidOrReceivedAt?.AddYears(1),
-                                RecurringType = transaction.RecurringType,
-                                Title = transaction.Title,
-                                Type = transaction.Type,
-                                UserId = transaction.UserId
-                            }; 
-                            await context.Transactions.AddAsync(newTransaction);
-                            await context.SaveChangesAsync();
-                        }
-                        break;
-                    
                 }
+                else
+                {
+                    await Installments(transaction);
+                }
+                
 
                 return new Response<Transaction?>(transaction, 201, "Transações criadas com sucesso");
             }
@@ -311,6 +274,117 @@ namespace Finux.Api.Handlers
             catch 
             {
                 return new Response<Transaction?>(null, 500, "Falha ao atualizar a transação");
+            }
+        }
+
+        private async Task Installments(Transaction transaction)
+        {
+            try
+            {
+                switch (transaction.InstallmentsType)
+                {
+                    case EInstallmentsType.Daily:
+                        for (int i = 0; i < transaction.Installments; i++)
+                        {
+                            var recurringTransaction = new Transaction
+                            {
+                                Amount = transaction.Amount,
+                                CategoryId = transaction.CategoryId,
+                                CreateAt = DateTime.Now,   
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddDays(i),
+                                RecurringType = transaction.RecurringType,
+                                Title = transaction.Title,
+                                Type = transaction.Type,
+                                UserId = transaction.UserId
+                            }; 
+                            await context.Transactions.AddAsync(recurringTransaction);
+                            await context.SaveChangesAsync();
+
+                        }
+                        break;
+                    case EInstallmentsType.Weekly: 
+                        for (int i = 0; i < transaction.Installments; i++)
+                        {
+                            var recurringTransaction = new Transaction
+                            {
+                                Amount = transaction.Amount,
+                                CategoryId = transaction.CategoryId,
+                                CreateAt = DateTime.Now,   
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddDays(i * 7),
+                                RecurringType = transaction.RecurringType,
+                                Title = transaction.Title,
+                                Type = transaction.Type,
+                                UserId = transaction.UserId
+                            }; 
+                            
+                            await context.Transactions.AddAsync(recurringTransaction);
+                            await context.SaveChangesAsync();
+
+                        }
+                        break;
+                    case EInstallmentsType.Monthly:
+                        for (int i = 0; i < transaction.Installments; i++)
+                        {
+                            var recurringTransaction = new Transaction
+                            {
+                                Amount = transaction.Amount,
+                                CategoryId = transaction.CategoryId,
+                                CreateAt = DateTime.Now,   
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddMonths(i),
+                                RecurringType = transaction.RecurringType,
+                                Title = transaction.Title,
+                                Type = transaction.Type,
+                                UserId = transaction.UserId
+                            }; 
+                            await context.Transactions.AddAsync(recurringTransaction);
+                            await context.SaveChangesAsync();
+
+                        }
+                        break;
+                    case EInstallmentsType.Quarterly:
+                        for (int i = 0; i < transaction.Installments; i++)
+                        {
+                            var recurringTransaction = new Transaction
+                            {
+                                Amount = transaction.Amount,
+                                CategoryId = transaction.CategoryId,
+                                CreateAt = DateTime.Now,   
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddMonths(i * 3),
+                                RecurringType = transaction.RecurringType,
+                                Title = transaction.Title,
+                                Type = transaction.Type,
+                                UserId = transaction.UserId
+                            }; 
+                            await context.Transactions.AddAsync(recurringTransaction);
+                            await context.SaveChangesAsync();
+
+                        }
+                        break;
+                    case EInstallmentsType.Yearly:
+                        for (int i = 0; i < transaction.Installments; i++)
+                        {
+                            transaction.PaidOrReceivedAt = DateTime.Now.AddYears(i);
+                            var recurringTransaction = new Transaction
+                            {
+                                Amount = transaction.Amount,
+                                CategoryId = transaction.CategoryId,
+                                CreateAt = DateTime.Now,   
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddYears(i),
+                                RecurringType = transaction.RecurringType,
+                                Title = transaction.Title,
+                                Type = transaction.Type,
+                                UserId = transaction.UserId
+                            }; 
+                            await context.Transactions.AddAsync(recurringTransaction);
+                            await context.SaveChangesAsync();
+
+                        }
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                throw; // TODO handle exception
             }
         }
     }

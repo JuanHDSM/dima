@@ -1,4 +1,5 @@
 @page "/entry/create"
+@using Transaction = System.Transactions.Transaction
 @inherits CreateTransactionPage
 
 <MudText Typo="Typo.h3">Lançamentos</MudText>
@@ -57,29 +58,76 @@
         </MudSelect>
         
         <MudText>Recorrência</MudText>
-        <MudSwitch Label="Recorrência" @bind-Value="InputModel.IsRecurring" Color="Color.Primary" />
+        <MudSwitch Label="Recorrência" @bind-Value="IsRecurring" Color="Color.Primary" />
         
-        @if (!InputModel.IsRecurring)
+        @if (!IsRecurring)
         {
             
         }
         else
         {
             <MudSelect
-                T="ERecurringType"
+                T="ERecurringType?"
                 Label="Recorrência"
                 AnchorOrigin="Origin.BottomCenter"
-            >
-                <MudSelectItem T="ERecurringType" Value="ERecurringType.Weekly">
-                    Semanalmente
-                </MudSelectItem>
-                <MudSelectItem T="ERecurringType" Value="ERecurringType.Monthly">
+                @bind-Value="InputModel.RecurringType">
+                <MudSelectItem T="ERecurringType?" Value="ERecurringType.MonthlyFixed">
                     Mensalmente
                 </MudSelectItem>
-                <MudSelectItem T="ERecurringType" Value="ERecurringType.Yearly">
-                    Anualmente
+                <MudSelectItem T="ERecurringType?" Value="ERecurringType.Customized">
+                    Parcelar ou Repetir
                 </MudSelectItem>
             </MudSelect>
+            
+            @if (InputModel.RecurringType == ERecurringType.Customized)
+            {
+                <MudNumericField
+                    Class="py-4"
+                    T="int"
+                    Label="Quantidade de parcelas"
+                    @bind-Value="InputModel.Installments" />
+                
+                <MudSelect
+                    T="EInstallmentsType"
+                    Class="py-4"
+                    AnchorOrigin="Origin.BottomCenter"
+                    Label="Tipo"
+                    @bind-Value="InputModel.InstallmentsType">
+
+                    <MudSelectItem T="EInstallmentsType"
+                                   Value="@EInstallmentsType.Daily">
+                        Diário
+                    </MudSelectItem>
+                        
+                    <MudSelectItem T="EInstallmentsType"
+                                   Value="@EInstallmentsType.Weekly">
+                        Semanal
+                    </MudSelectItem>
+
+                    <MudSelectItem T="EInstallmentsType"
+                                   Value="@EInstallmentsType.Monthly">
+                        Mensal
+                    </MudSelectItem>
+                        
+                    <MudSelectItem T="EInstallmentsType"
+                                   Value="@EInstallmentsType.Quarterly">
+                        Trimestral
+                    </MudSelectItem>
+                        
+                    <MudSelectItem T="EInstallmentsType"
+                                   Value="@EInstallmentsType.Yearly">
+                        Anual
+                    </MudSelectItem>
+
+                </MudSelect>
+                
+                <MudToggleGroup T="string" SelectionMode="SelectionMode.SingleSelection" @bind-Value="_value1" Color="Color.Primary" CheckMark FixedContent>
+                    <MudToggleItem Value="@("total_values")" Text="Valor Total" />
+                    <MudToggleItem Value="@("installments_value")" Text="Valor da Parcela" />
+                </MudToggleGroup>
+                
+                <MudText>Em @($"{InputModel.Installments}X") de: @(_value1 == "total_values" ? $"{InputModel.Amount / InputModel.Installments:F2}" : $"{InputModel.Amount:F2}")</MudText>
+            }
         }
 
         <MudButton 

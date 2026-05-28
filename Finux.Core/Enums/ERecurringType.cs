@@ -1,8 +1,7 @@
-namespace Dima.Core.Enums;
+namespace Finux.Core.Enums;
 
 public enum ERecurringType
 {
-    Weekly = 1,
-    Monthly = 2,
-    Yearly = 3
+    MonthlyFixed = 1,
+    Customized = 2,
 }

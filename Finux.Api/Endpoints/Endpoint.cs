@@ -15,7 +15,7 @@ namespace Finux.Api.Endpoints
     {
         public static void MapEndpoints(this WebApplication app)
         {
-            var endpoint = app.MapGroup("api");
+            var endpoint = app.MapGroup("");
 
             endpoint.MapGroup("")
                 .WithTags("Health Check")

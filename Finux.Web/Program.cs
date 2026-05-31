@@ -33,7 +33,7 @@ builder.Services.AddAuthorizationCore();
 
 builder.Services.AddHttpClient(Configuration.HttpClientName, options =>
 {
-    options.BaseAddress = new Uri(Configuration.BackendUrl);
+    options.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
 }).AddHttpMessageHandler<CookieHandler>();
 
 builder.Services.AddTransient<IAccountHandler, AccountHandler>();

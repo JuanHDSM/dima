@@ -40,8 +40,8 @@ namespace Finux.Web.Components.Reports
             var incomes = new List<double>();
             var expenses = new List<double>();
 
-            incomes.Add(0.0);
-            expenses.Add(0.0);
+            // incomes.Add(0.0);
+            // expenses.Add(0.0);
             
             foreach (var item in result.Data)
             {

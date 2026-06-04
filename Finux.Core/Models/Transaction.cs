@@ -10,11 +10,9 @@ public class Transaction
     public DateTime? PaidOrReceivedAt { get; set; }
     public ETransactionType Type { get; set; } = ETransactionType.Withdraw;
     public decimal Amount { get; set; }
-    public ERecurringType? RecurringType { get; set; } = ERecurringType.MonthlyFixed;
-    
-    public EInstallmentsType InstallmentsType { get; set; } = EInstallmentsType.Monthly;
     public long CategoryId { get; set; }
     public Category Category { get; set; } = null!;
+    public long? RecurringId { get; set; }
+    public Recurring? Recurring { get; set; }
     public string UserId { get; set; } = string.Empty;
-    public int? Installments { get; set; }
 }

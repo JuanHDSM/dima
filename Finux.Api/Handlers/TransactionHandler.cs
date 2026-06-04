@@ -15,16 +15,22 @@ namespace Finux.Api.Handlers
         {
             try
             {
+
+                var recurring = new Recurring
+                {
+                    RecurringType = request.RecurringType,
+                    InstallmentsType = request.InstallmentsType,
+                    Installments = request.Installments
+                };
+                    
                 var transaction = new Transaction
                 {
                     UserId = request.UserId,
                     CategoryId = request.CategoryId,
                     CreateAt = DateTime.Now,
                     Amount = request.Amount,
+                    RecurringId = null,
                     PaidOrReceivedAt = request.PaidOrReceivedAt,
-                    RecurringType = request.RecurringType ?? null,
-                    InstallmentsType = request.InstallmentsType,
-                    Installments = request.Installments,
                     Title = request.Title,
                     Type = request.Type,
                 };
@@ -47,8 +53,8 @@ namespace Finux.Api.Handlers
                                 Amount = transaction.Amount,
                                 CategoryId = transaction.CategoryId,
                                 CreateAt = DateTime.Now,   
-                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddMonths(i),
-                                RecurringType = transaction.RecurringType,
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt?.AddMonths(i),
+                                RecurringId = recurring.Id,
                                 Title = transaction.Title,
                                 Type = transaction.Type,
                                 UserId = transaction.UserId
@@ -60,7 +66,7 @@ namespace Finux.Api.Handlers
                 }
                 else
                 {
-                    await Installments(transaction);
+                    await Installments(transaction, recurring);
                 }
                 
 
@@ -277,22 +283,22 @@ namespace Finux.Api.Handlers
             }
         }
 
-        private async Task Installments(Transaction transaction)
+        private async Task Installments(Transaction transaction, Recurring recurring)
         {
             try
             {
-                switch (transaction.InstallmentsType)
+                switch (recurring.InstallmentsType)
                 {
                     case EInstallmentsType.Daily:
-                        for (int i = 0; i < transaction.Installments; i++)
+                        for (int i = 0; i < recurring.Installments; i++)
                         {
                             var recurringTransaction = new Transaction
                             {
                                 Amount = transaction.Amount,
                                 CategoryId = transaction.CategoryId,
                                 CreateAt = DateTime.Now,   
-                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddDays(i),
-                                RecurringType = transaction.RecurringType,
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt?.AddDays(i),
+                                RecurringId = recurring.Id,
                                 Title = transaction.Title,
                                 Type = transaction.Type,
                                 UserId = transaction.UserId
@@ -303,15 +309,15 @@ namespace Finux.Api.Handlers
                         }
                         break;
                     case EInstallmentsType.Weekly: 
-                        for (int i = 0; i < transaction.Installments; i++)
+                        for (int i = 0; i < recurring.Installments; i++)
                         {
                             var recurringTransaction = new Transaction
                             {
                                 Amount = transaction.Amount,
                                 CategoryId = transaction.CategoryId,
                                 CreateAt = DateTime.Now,   
-                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddDays(i * 7),
-                                RecurringType = transaction.RecurringType,
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt?.AddDays(i * 7),
+                                RecurringId = recurring.Id,
                                 Title = transaction.Title,
                                 Type = transaction.Type,
                                 UserId = transaction.UserId
@@ -323,15 +329,15 @@ namespace Finux.Api.Handlers
                         }
                         break;
                     case EInstallmentsType.Monthly:
-                        for (int i = 0; i < transaction.Installments; i++)
+                        for (int i = 0; i < recurring.Installments; i++)
                         {
                             var recurringTransaction = new Transaction
                             {
                                 Amount = transaction.Amount,
                                 CategoryId = transaction.CategoryId,
                                 CreateAt = DateTime.Now,   
-                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddMonths(i),
-                                RecurringType = transaction.RecurringType,
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt?.AddMonths(i),
+                                RecurringId = recurring.Id,
                                 Title = transaction.Title,
                                 Type = transaction.Type,
                                 UserId = transaction.UserId
@@ -342,15 +348,15 @@ namespace Finux.Api.Handlers
                         }
                         break;
                     case EInstallmentsType.Quarterly:
-                        for (int i = 0; i < transaction.Installments; i++)
+                        for (int i = 0; i < recurring.Installments; i++)
                         {
                             var recurringTransaction = new Transaction
                             {
                                 Amount = transaction.Amount,
                                 CategoryId = transaction.CategoryId,
                                 CreateAt = DateTime.Now,   
-                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddMonths(i * 3),
-                                RecurringType = transaction.RecurringType,
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt?.AddMonths(i * 3),
+                                RecurringId = recurring.Id,
                                 Title = transaction.Title,
                                 Type = transaction.Type,
                                 UserId = transaction.UserId
@@ -361,7 +367,7 @@ namespace Finux.Api.Handlers
                         }
                         break;
                     case EInstallmentsType.Yearly:
-                        for (int i = 0; i < transaction.Installments; i++)
+                        for (int i = 0; i < recurring.Installments; i++)
                         {
                             transaction.PaidOrReceivedAt = DateTime.Now.AddYears(i);
                             var recurringTransaction = new Transaction
@@ -369,8 +375,8 @@ namespace Finux.Api.Handlers
                                 Amount = transaction.Amount,
                                 CategoryId = transaction.CategoryId,
                                 CreateAt = DateTime.Now,   
-                                PaidOrReceivedAt = transaction.PaidOrReceivedAt = DateTime.Now.AddYears(i),
-                                RecurringType = transaction.RecurringType,
+                                PaidOrReceivedAt = transaction.PaidOrReceivedAt?.AddYears(i),
+                                RecurringId = recurring.Id,
                                 Title = transaction.Title,
                                 Type = transaction.Type,
                                 UserId = transaction.UserId

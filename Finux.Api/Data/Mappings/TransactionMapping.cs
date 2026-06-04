@@ -51,17 +51,7 @@ namespace Finux.Api.Data.Mappings
             builder.Property(x => x.CategoryId)
                 .HasColumnName("categoryId");
 
-            builder.Property(x => x.Installments)
-                .HasColumnName("installments")
-                .HasColumnType("TINYINT");
-            
-            builder.Property(x => x.InstallmentsType)
-                .HasColumnName("installmentsType")
-                .HasColumnType("TINYINT");
-            
-            builder.Property(x => x.RecurringType)
-                .HasColumnName("recurringType")
-                .HasColumnType("TINYINT");
+
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Finux.Core.Requests.Transactions
         public DateTime? PaidOrReceivedAt { get; set; }
 
         public EInstallmentsType InstallmentsType { get; set; } = EInstallmentsType.Monthly;
-        public ERecurringType? RecurringType { get; set; } = ERecurringType.MonthlyFixed;
-        public int Installments { get; set; } = 1;
+        public ERecurringType? RecurringType { get; set; }
+        public int? Installments { get; set; }
     }
 }

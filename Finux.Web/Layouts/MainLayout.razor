@@ -15,14 +15,6 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="ToggleDrawer" />
                 <a href="/" style="color: white; font-weight: bold;">Finux</a>
                 <MudSpacer />
-
-                <div class="d-flex justify-end">
-                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Href="/entry/create">
-                        ADICIONAR TRANSAÇÃO
-                    </MudButton>
-                </div>
-                
-                <MudSpacer />
                 <MudText Typo="Typo.caption">
                     @context.User.Identity?.Name
                 </MudText>
@@ -41,6 +33,10 @@
             <MudMainContent>
                 <MudContainer Class="mt-4">
                     @Body
+                    <MudFab Color="Color.Primary"
+                            StartIcon="@Icons.Material.Filled.Add"
+                            Style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;" 
+                            Href="/entry/create"/>
                 </MudContainer>
             </MudMainContent>
         </MudLayout>

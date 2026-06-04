@@ -74,7 +74,7 @@ namespace Finux.Web.Pages.Transactions
             {
                 if (_value1 == "total_values")
                 {
-                    InputModel.Amount /= InputModel.Installments;
+                    InputModel.Amount /= InputModel.Installments ?? 1;
                 }
                 var result = await Handler.CreateAsync(InputModel);
                 if (result.IsSuccess)
